@@ -31,7 +31,6 @@ struct FlashCardsView: View {
         }
     }
     @State private var mode: LearnMode = .category
-    @State private var speaking = false
 
     var body: some View {
         NavigationStack {
@@ -394,20 +393,6 @@ struct FlipCard: View {
                     .foregroundStyle(accent)
                     .tracking(2)
                 Spacer()
-                Button {
-                    if reverseMode {
-                        SpeechManager.shared.speakGerman(primary)
-                    } else {
-                        SpeechManager.shared.speakItalian(primary)
-                    }
-                } label: {
-                    Image(systemName: "speaker.wave.2.fill")
-                        .font(.caption.weight(.bold))
-                        .foregroundStyle(accent)
-                        .padding(8)
-                        .background(Circle().fill(accent.opacity(0.14)))
-                }
-                .buttonStyle(.plain)
             }
             Spacer()
             Text(primary)

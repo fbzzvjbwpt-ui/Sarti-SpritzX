@@ -13,7 +13,6 @@ struct VocabBrowseView: View {
     @State private var searchText = ""
     @State private var selectedCategory: String? = nil
     @State private var favoritesOnly = false
-    @State private var speakingKey: String? = nil
 
     var body: some View {
         NavigationStack {
@@ -28,7 +27,7 @@ struct VocabBrowseView: View {
                         } else {
                             LazyVStack(spacing: 10) {
                                 ForEach(filteredVocab) { item in
-                                    VocabRow(item: item, speakingKey: $speakingKey, game: game)
+                                    VocabRow(item: item, game: game)
                                 }
                             }
                         }
@@ -133,29 +132,11 @@ struct VocabBrowseView: View {
 
 struct VocabRow: View {
     let item: VocabItem
-    @Binding var speakingKey: String?
     let game: GamificationStore
     @State private var isFav = false
-    @State private var pulse = false
 
     var body: some View {
-        let speaking = speakingKey == item.italian
         return HStack(alignment: .top, spacing: 12) {
-            Button {
-                SpeechManager.shared.speakItalian(item.italian)
-                speakingKey = item.italian
-                withAnimation(.easeInOut(duration: 0.4)) { pulse = true }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { speakingKey = nil; pulse = false }
-            } label: {
-                Image(systemName: speaking ? "speaker.wave.2.fill" : "speaker.wave.2")
-                    .font(.title3)
-                    .foregroundStyle(.pinkRed)
-                    .frame(width: 40, height: 40)
-                    .background(Circle().fill(Color.pinkRed.opacity(0.12)))
-                    .scaleEffect(pulse ? 1.15 : 1.0)
-            }
-            .buttonStyle(.plain)
-
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.italian)
                     .font(.headline)
