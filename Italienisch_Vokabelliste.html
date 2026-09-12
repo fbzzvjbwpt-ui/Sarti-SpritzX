@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Italienisch – Vokabelliste</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4f1e9;
+      --card: rgba(255,255,255,.88);
+      --text: #1e2a22;
+      --muted: #68736b;
+      --line: #d9ded8;
+      --green: #247451;
+      --green-soft: #dcefe4;
+      --red: #b7453e;
+      --shadow: 0 14px 35px rgba(31, 54, 42, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 85% 0%, rgba(183,69,62,.12), transparent 27rem),
+        radial-gradient(circle at 0% 20%, rgba(36,116,81,.13), transparent 30rem),
+        var(--bg);
+    }
+    main { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 70px; }
+    header { margin-bottom: 28px; }
+    .eyebrow { color: var(--red); font-size: .8rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { margin: 8px 0 6px; font-size: clamp(2rem, 6vw, 4rem); letter-spacing: -.055em; line-height: 1; }
+    .subtitle { color: var(--muted); margin: 0; font-size: 1.05rem; }
+    .toolbar {
+      position: sticky; top: 12px; z-index: 5;
+      display: grid; gap: 12px;
+      margin: 26px 0 30px; padding: 14px;
+      border: 1px solid rgba(255,255,255,.65); border-radius: 20px;
+      background: rgba(255,255,255,.72); backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    input[type="search"] {
+      width: 100%; border: 1px solid var(--line); border-radius: 13px;
+      padding: 13px 15px; font: inherit; color: var(--text); background: rgba(255,255,255,.82);
+      outline: none;
+    }
+    input[type="search"]:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(36,116,81,.14); }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      border: 0; border-radius: 999px; padding: 8px 12px; cursor: pointer;
+      font: 650 .87rem/1 -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--green); background: var(--green-soft);
+    }
+    button.active { color: white; background: var(--green); }
+    #list { display: flex; flex-direction: column; }
+    #list > section[data-category="phrasen"] { order: 1; }
+    #list > section[data-category="restaurant"] { order: 2; }
+    #list > section[data-category="unterwegs"] { order: 3; }
+    #list > section[data-category="smalltalk"] { order: 4; }
+    #list > section[data-category="gruss"] { order: 5; }
+    #list > section[data-category="befinden"] { order: 6; }
+    #list > section[data-category="herkunft"] { order: 7; }
+    #list > section[data-category="alltag"] { order: 8; }
+    #list > section[data-category="familie"] { order: 9; }
+    #list > section[data-category="zahlen"] { order: 10; }
+    section {
+      margin: 18px 0; overflow: hidden;
+      border: 1px solid rgba(217,222,216,.9); border-radius: 22px;
+      background: var(--card); box-shadow: var(--shadow);
+    }
+    section h2 { margin: 0; padding: 20px 22px 14px; font-size: 1.12rem; letter-spacing: -.01em; }
+    .entry {
+      display: grid; grid-template-columns: minmax(190px, 1fr) minmax(190px, 1fr);
+      gap: 22px; padding: 14px 22px; border-top: 1px solid var(--line);
+    }
+    .it { font-weight: 720; }
+    .pron { display: block; margin-top: 5px; color: var(--green); font-size: .82rem; font-weight: 560; letter-spacing: .01em; }
+    .pron::before { content: "Aussprache: "; color: var(--muted); font-weight: 500; }
+    .de { color: var(--muted); }
+    .empty { display: none; padding: 50px 20px; text-align: center; color: var(--muted); }
+    footer { padding-top: 22px; text-align: center; color: var(--muted); font-size: .85rem; }
+    mark { color: inherit; background: #ffe28d; border-radius: 3px; padding: 0 2px; }
+    @media (max-width: 620px) {
+      main { width: min(100% - 20px, 980px); padding-top: 28px; }
+      .entry { grid-template-columns: 1fr; gap: 4px; padding: 13px 18px; }
+      section h2 { padding-left: 18px; }
+      .toolbar { top: 6px; }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#141a16; --card:rgba(28,37,31,.9); --text:#eff5f0; --muted:#afbbb2; --line:#3b463e; --green:#59b987; --green-soft:#263f31; --red:#e27e76; --shadow:0 14px 35px rgba(0,0,0,.22); }
+      .toolbar { background:rgba(29,37,32,.78); border-color:rgba(255,255,255,.08); }
+      input[type="search"] { background:rgba(15,22,17,.8); }
+      mark { background:#725e20; }
+    }
+    @media print {
+      body { background: white; color: black; }
+      main { width: 100%; padding: 0; }
+      .toolbar, footer { display: none; }
+      section { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Il mio italiano</div>
+      <h1>Vokabelliste 🇮🇹</h1>
+      <p class="subtitle">Deine Sätze für Reise, Restaurant und erste Gespräche</p>
+    </header>
+
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Italienisch oder Deutsch suchen …" autofocus>
+      <div class="filters" aria-label="Themenfilter">
+        <button data-filter="phrasen">Wichtige Phrasen</button>
+        <button class="active" data-filter="all">Alle</button>
+        <button data-filter="restaurant">Restaurant</button>
+        <button data-filter="unterwegs">Unterwegs</button>
+        <button data-filter="smalltalk">Small Talk</button>
+        <button data-filter="gruss">Begrüßung</button>
+        <button data-filter="befinden">Befinden</button>
+        <button data-filter="herkunft">Herkunft &amp; Wohnen</button>
+        <button data-filter="grammatik">Grammatik</button>
+        <button data-filter="alphabet">Alphabet</button>
+        <button data-filter="alltag">Alltag</button>
+        <button data-filter="familie">Familie</button>
+        <button data-filter="zahlen">Zahlen</button>
+      </div>
+    </div>
+
+    <div id="list">
+      <section data-category="phrasen">
+        <h2>Wichtige Phrasen</h2>
+        <div class="entry"><div class="it">Mi chiamo Tobias, sono tedesco e vengo da Berlino, in Germania.<span class="pron">mi kjamo Tobias, sono tedesko e wengo da Berlino, in dschermania</span></div><div class="de">Ich bin Tobias, ich bin Deutscher und komme aus Berlin in Deutschland.</div></div>
+        <div class="entry"><div class="it">Scusi!<span class="pron">skusi</span></div><div class="de">Entschuldigen Sie! / Entschuldigung!</div></div>
+        <div class="entry"><div class="it">Grazie.<span class="pron">gratsje</span></div><div class="de">Danke.</div></div>
+        <div class="entry"><div class="it">Anch’io.<span class="pron">ankio</span></div><div class="de">Ich auch.</div></div>
+        <div class="entry"><div class="it">Mi può aiutare?<span class="pron">mi puo aiutare</span></div><div class="de">Können Sie mir helfen?</div></div>
+        <div class="entry"><div class="it">Non parlo italiano.<span class="pron">non parlo italjano</span></div><div class="de">Ich spreche kein Italienisch.</div></div>
+        <div class="entry"><div class="it">Parla inglese?<span class="pron">parla inglese</span></div><div class="de">Sprechen Sie Englisch?</div></div>
+        <div class="entry"><div class="it">Parla tedesco?<span class="pron">parla tedesko</span></div><div class="de">Sprechen Sie Deutsch?</div></div>
+        <div class="entry"><div class="it">Non capisco.<span class="pron">non kapisko</span></div><div class="de">Ich verstehe nicht.</div></div>
+        <div class="entry"><div class="it">Non ho capito.<span class="pron">non o kapito</span></div><div class="de">Ich habe es nicht verstanden.</div></div>
+        <div class="entry"><div class="it">Dov’è …?<span class="pron">dowe</span></div><div class="de">Wo ist …?</div></div>
+        <div class="entry"><div class="it">Dov’è il bagno?<span class="pron">dowe il banjo</span></div><div class="de">Wo ist die Toilette?</div></div>
+        <div class="entry"><div class="it">Quanto costa?<span class="pron">kwanto kosta</span></div><div class="de">Wie viel kostet es?</div></div>
+      </section>
+
+      <section data-category="gruss">
+        <h2>Begrüßung und Verabschiedung</h2>
+        <div class="entry"><div class="it">Ciao!<span class="pron">tschau</span></div><div class="de">Hallo! / Tschüss!</div></div>
+        <div class="entry"><div class="it">Buongiorno!<span class="pron">buon-dschorno</span></div><div class="de">Guten Morgen! / Guten Tag!</div></div>
+        <div class="entry"><div class="it">Buon pomeriggio!<span class="pron">buon pomeriddscho</span></div><div class="de">Guten Nachmittag!</div></div>
+        <div class="entry"><div class="it">Buonasera!<span class="pron">buona-sera</span></div><div class="de">Guten Abend!</div></div>
+        <div class="entry"><div class="it">Buonanotte!<span class="pron">buona-notte</span></div><div class="de">Gute Nacht!</div></div>
+        <div class="entry"><div class="it">A presto!<span class="pron">a presto</span></div><div class="de">Bis bald!</div></div>
+        <div class="entry"><div class="it">È tutto per oggi.<span class="pron">e tutto per oddschi</span></div><div class="de">Das ist alles für heute.</div></div>
+        <div class="entry"><div class="it">Come ti chiami?<span class="pron">kome ti kjami</span></div><div class="de">Wie heißt du?</div></div>
+        <div class="entry"><div class="it">Come si chiama?<span class="pron">kome si kjama</span></div><div class="de">Wie heißen Sie?</div></div>
+        <div class="entry"><div class="it">Mi chiamo …<span class="pron">mi kjamo</span></div><div class="de">Ich heiße …</div></div>
+        <div class="entry"><div class="it">Mi chiamo Tobias.<span class="pron">mi kjamo Tobias</span></div><div class="de">Ich heiße Tobias.</div></div>
+        <div class="entry"><div class="it">Sono …<span class="pron">sono</span></div><div class="de">Ich bin …</div></div>
+        <div class="entry"><div class="it">Piacere!<span class="pron">pjatschere</span></div><div class="de">Freut mich!</div></div>
+        <div class="entry"><div class="it">Piacere mio!<span class="pron">pjatschere mio</span></div><div class="de">Ganz meinerseits!</div></div>
+      </section>
+
+      <section data-category="befinden">
+        <h2>Wie geht es dir?</h2>
+        <div class="entry"><div class="it">Come stai?<span class="pron">kome stai</span></div><div class="de">Wie geht es dir? (informell)</div></div>
+        <div class="entry"><div class="it">E tu?<span class="pron">e tu</span></div><div class="de">Und du? (informell)</div></div>
+        <div class="entry"><div class="it">Come sta?<span class="pron">kome sta</span></div><div class="de">Wie geht es Ihnen? (höflich)</div></div>
+        <div class="entry"><div class="it">E Lei?<span class="pron">e läi</span></div><div class="de">Und Sie? (höflich)</div></div>
+        <div class="entry"><div class="it">Come va?<span class="pron">kome wa</span></div><div class="de">Wie läuft es?</div></div>
+        <div class="entry"><div class="it">Bene, grazie. E tu?<span class="pron">bene, gratsje. e tu</span></div><div class="de">Gut, danke. Und dir?</div></div>
+        <div class="entry"><div class="it">Molto bene.<span class="pron">molto bene</span></div><div class="de">Sehr gut.</div></div>
+        <div class="entry"><div class="it">Benissimo!<span class="pron">benissimo</span></div><div class="de">Ausgezeichnet! / Sehr, sehr gut!</div></div>
+        <div class="entry"><div class="it">Sto bene.<span class="pron">sto bene</span></div><div class="de">Mir geht es gut.</div></div>
+        <div class="entry"><div class="it">Sono un po’ stanco.<span class="pron">sono un po stanko</span></div><div class="de">Ich bin ein bisschen müde. (männlich)</div></div>
+        <div class="entry"><div class="it">un po’<span class="pron">un po</span></div><div class="de">ein bisschen</div></div>
+        <div class="entry"><div class="it">stanco / stanca<span class="pron">stanko / stanka</span></div><div class="de">müde · männlich / weiblich</div></div>
+        <div class="entry"><div class="it">Ho troppo lavoro.<span class="pron">o troppo laworo</span></div><div class="de">Ich habe zu viel Arbeit.</div></div>
+        <div class="entry"><div class="it">troppo<span class="pron">troppo</span></div><div class="de">zu viel</div></div>
+        <div class="entry"><div class="it">il lavoro<span class="pron">il laworo</span></div><div class="de">die Arbeit</div></div>
+        <div class="entry"><div class="it">Male.<span class="pron">male</span></div><div class="de">Schlecht.</div></div>
+        <div class="entry"><div class="it">Molto male.<span class="pron">molto male</span></div><div class="de">Sehr schlecht.</div></div>
+        <div class="entry"><div class="it">Malissimo!<span class="pron">malissimo</span></div><div class="de">Furchtbar!</div></div>
+        <div class="entry"><div class="it">Così così.<span class="pron">kosi kosi</span></div><div class="de">So lala.</div></div>
+        <div class="entry"><div class="it">Non c’è male.<span class="pron">non tsche male</span></div><div class="de">Nicht schlecht.</div></div>
+        <div class="entry"><div class="it">Oggi sto male.<span class="pron">oddschi sto male</span></div><div class="de">Heute geht es mir schlecht.</div></div>
+      </section>
+
+      <section data-category="grammatik">
+        <h2>Grammatik · Personalpronomen und Verben</h2>
+        <div class="entry"><div class="it">io<span class="pron">io</span></div><div class="de">ich</div></div>
+        <div class="entry"><div class="it">tu<span class="pron">tu</span></div><div class="de">du</div></div>
+        <div class="entry"><div class="it">lui<span class="pron">lui</span></div><div class="de">er</div></div>
+        <div class="entry"><div class="it">lei<span class="pron">läi</span></div><div class="de">sie</div></div>
+        <div class="entry"><div class="it">Lei<span class="pron">läi</span></div><div class="de">Sie (höflich)</div></div>
+        <div class="entry"><div class="it">noi<span class="pron">noi</span></div><div class="de">wir</div></div>
+        <div class="entry"><div class="it">voi<span class="pron">woi</span></div><div class="de">ihr / Sie (Mehrzahl)</div></div>
+        <div class="entry"><div class="it">loro<span class="pron">loro</span></div><div class="de">sie (Mehrzahl)</div></div>
+        <div class="entry"><div class="it">essere<span class="pron">essere</span></div><div class="de">sein</div></div>
+        <div class="entry"><div class="it">abitare<span class="pron">abitare</span></div><div class="de">wohnen</div></div>
+        <div class="entry"><div class="it">io abito<span class="pron">io abito</span></div><div class="de">ich wohne</div></div>
+        <div class="entry"><div class="it">tu abiti<span class="pron">tu abiti</span></div><div class="de">du wohnst</div></div>
+        <div class="entry"><div class="it">lui / lei / Lei abita<span class="pron">lui / läi / läi abita</span></div><div class="de">er / sie wohnt · Sie wohnen</div></div>
+        <div class="entry"><div class="it">noi abitiamo<span class="pron">noi abitjamo</span></div><div class="de">wir wohnen</div></div>
+        <div class="entry"><div class="it">voi abitate<span class="pron">woi abitate</span></div><div class="de">ihr wohnt · Sie wohnen (Mehrzahl)</div></div>
+        <div class="entry"><div class="it">loro abitano<span class="pron">loro abitano</span></div><div class="de">sie wohnen</div></div>
+        <div class="entry"><div class="it">Tom e Mark abitano in Germania.<span class="pron">Tom e Mark abitano in dschermania</span></div><div class="de">Tom und Mark wohnen in Deutschland.</div></div>
+        <div class="entry"><div class="it">Io abito in Italia. / Abito in Italia?<span class="pron">io abito in italja / abito in italja</span></div><div class="de">Ich wohne in Italien. / Wohne ich in Italien?</div></div>
+        <div class="entry"><div class="it">Tu abiti in Italia. / Abiti in Italia?<span class="pron">tu abiti in italja / abiti in italja</span></div><div class="de">Du wohnst in Italien. / Wohnst du in Italien?</div></div>
+        <div class="entry"><div class="it">Lui abita in Italia. / Abita in Italia?<span class="pron">lui abita in italja / abita in italja</span></div><div class="de">Er wohnt in Italien. / Wohnt er in Italien?</div></div>
+        <div class="entry"><div class="it">Lei abita in Italia. / Abita in Italia?<span class="pron">läi abita in italja / abita in italja</span></div><div class="de">Sie wohnt in Italien. / Wohnt sie in Italien? · höflich auch: Sie wohnen / Wohnen Sie in Italien?</div></div>
+        <div class="entry"><div class="it">Noi abitiamo in Italia. / Abitiamo in Italia?<span class="pron">noi abitjamo in italja / abitjamo in italja</span></div><div class="de">Wir wohnen in Italien. / Wohnen wir in Italien?</div></div>
+        <div class="entry"><div class="it">Voi abitate in Italia. / Abitate in Italia?<span class="pron">woi abitate in italja / abitate in italja</span></div><div class="de">Ihr wohnt in Italien. / Wohnt ihr in Italien?</div></div>
+        <div class="entry"><div class="it">Loro abitano in Italia. / Abitano in Italia?<span class="pron">loro abitano in italja / abitano in italja</span></div><div class="de">Sie wohnen in Italien. / Wohnen sie in Italien?</div></div>
+      </section>
+
+      <section data-category="alphabet">
+        <h2>Das italienische Alphabet</h2>
+        <div class="entry"><div class="it">A – B – C – D – E<span class="pron">a – bi – tschi – di – e</span></div><div class="de">Buchstabennamen A bis E</div></div>
+        <div class="entry"><div class="it">F – G – H – I<span class="pron">effe – dschi – akka – i</span></div><div class="de">Buchstabennamen F bis I</div></div>
+        <div class="entry"><div class="it">L – M – N – O<span class="pron">elle – emme – enne – o</span></div><div class="de">Buchstabennamen L bis O</div></div>
+        <div class="entry"><div class="it">P – Q – R – S – T<span class="pron">pi – ku – erre – esse – ti</span></div><div class="de">Buchstabennamen P bis T</div></div>
+        <div class="entry"><div class="it">U – V – Z<span class="pron">u – wi / wu – dzeta</span></div><div class="de">Buchstabennamen U, V und Z</div></div>
+        <div class="entry"><div class="it">J – K – W – X – Y<span class="pron">i lunga – kappa – doppia wu – iks – ipsilon</span></div><div class="de">Zusatzbuchstaben, vor allem in Fremdwörtern und Namen</div></div>
+      </section>
+
+      <section data-category="restaurant">
+        <h2>Restaurant · Tisch und Reservierung</h2>
+        <div class="entry"><div class="it">Ho una prenotazione a nome di …<span class="pron">o una prenotatsjone a nome di</span></div><div class="de">Ich habe eine Reservierung auf den Namen …</div></div>
+        <div class="entry"><div class="it">Vorrei prenotare un tavolo per due persone.<span class="pron">vorrei prenotare un tavolo per due persone</span></div><div class="de">Ich möchte einen Tisch für zwei Personen reservieren.</div></div>
+        <div class="entry"><div class="it">Vorrei prenotare un tavolo per due persone alle otto.<span class="pron">vorrei prenotare un tavolo per due persone alle otto</span></div><div class="de">Ich möchte einen Tisch für zwei Personen um 20 Uhr reservieren.</div></div>
+        <div class="entry"><div class="it">Avete un tavolo libero per due?<span class="pron">avete un tavolo libero per due</span></div><div class="de">Haben Sie einen freien Tisch für zwei?</div></div>
+        <div class="entry"><div class="it">Siamo in due.<span class="pron">sjamo in due</span></div><div class="de">Wir sind zu zweit.</div></div>
+        <div class="entry"><div class="it">Vorrei un tavolo per quattro.<span class="pron">vorrei un tavolo per kwattro</span></div><div class="de">Ich möchte einen Tisch für vier Personen.</div></div>
+        <div class="entry"><div class="it">Possiamo sederci fuori?<span class="pron">possjamo sedertschi fwori</span></div><div class="de">Können wir draußen sitzen?</div></div>
+        <div class="entry"><div class="it">Possiamo sederci dentro?<span class="pron">possjamo sedertschi dentro</span></div><div class="de">Können wir drinnen sitzen?</div></div>
+      </section>
+
+      <section data-category="restaurant">
+        <h2>Restaurant · Speisekarte und Bestellen</h2>
+        <div class="entry"><div class="it">Il menù, per favore.<span class="pron">il menu, per favore</span></div><div class="de">Die Speisekarte, bitte.</div></div>
+        <div class="entry"><div class="it">Posso avere il menù, per favore?<span class="pron">posso avere il menu, per favore</span></div><div class="de">Kann ich bitte die Speisekarte haben?</div></div>
+        <div class="entry"><div class="it">Cosa mi consiglia?<span class="pron">kosa mi konsilja</span></div><div class="de">Was empfehlen Sie mir?</div></div>
+        <div class="entry"><div class="it">Vorrei ordinare, per favore.<span class="pron">vorrei ordinare, per favore</span></div><div class="de">Ich möchte gern bestellen.</div></div>
+        <div class="entry"><div class="it">Vorrei …<span class="pron">vorrei</span></div><div class="de">Ich hätte gern … / Ich möchte …</div></div>
+        <div class="entry"><div class="it">Per me …, per favore.<span class="pron">per me, per favore</span></div><div class="de">Für mich …, bitte.</div></div>
+        <div class="entry"><div class="it">Prendo …<span class="pron">prendo</span></div><div class="de">Ich nehme …</div></div>
+        <div class="entry"><div class="it">Vorrei il ragù, per favore.<span class="pron">vorrei il ragu, per favore</span></div><div class="de">Ich hätte gern das Ragù, bitte.</div></div>
+        <div class="entry"><div class="it">Prendo il tiramisù.<span class="pron">prendo il tiramisu</span></div><div class="de">Ich nehme das Tiramisù.</div></div>
+        <div class="entry"><div class="it">Vorremmo un tiramisù e due caffè espressi.<span class="pron">vorremmo un tiramisu e due kaffe espressi</span></div><div class="de">Wir hätten gerne ein Tiramisù und zwei Espressi.</div></div>
+        <div class="entry"><div class="it">Posso avere …?<span class="pron">posso avere</span></div><div class="de">Kann ich … haben?</div></div>
+        <div class="entry"><div class="it">Senza …, per favore.<span class="pron">sentsa, per favore</span></div><div class="de">Ohne …, bitte.</div></div>
+        <div class="entry"><div class="it">È tutto, grazie.<span class="pron">e tutto, gratsje</span></div><div class="de">Das ist alles, danke.</div></div>
+      </section>
+
+      <section data-category="restaurant">
+        <h2>Restaurant · Getränke</h2>
+        <div class="entry"><div class="it">Vorrei un bicchiere d’acqua naturale.<span class="pron">vorrei un bik-kjere dak-kwa naturale</span></div><div class="de">Ich möchte ein Glas stilles Wasser.</div></div>
+        <div class="entry"><div class="it">Una bottiglia d’acqua naturale, per favore.<span class="pron">una bottilja dak-kwa naturale, per favore</span></div><div class="de">Eine Flasche stilles Wasser, bitte.</div></div>
+        <div class="entry"><div class="it">Una bottiglia d’acqua frizzante, per favore.<span class="pron">una bottilja dak-kwa frittsante, per favore</span></div><div class="de">Eine Flasche Sprudelwasser, bitte.</div></div>
+        <div class="entry"><div class="it">Vorrei un bicchiere di vino bianco, per favore.<span class="pron">vorrei un bik-kjere di vino bjanko, per favore</span></div><div class="de">Ich möchte ein Glas Weißwein, bitte.</div></div>
+        <div class="entry"><div class="it">Vorrei un bicchiere di vino rosso, per favore.<span class="pron">vorrei un bik-kjere di vino rosso, per favore</span></div><div class="de">Ich möchte ein Glas Rotwein, bitte.</div></div>
+        <div class="entry"><div class="it">Vorrei un bicchiere di vino rosato, per favore.<span class="pron">vorrei un bik-kjere di vino rosato, per favore</span></div><div class="de">Ich möchte ein Glas Roséwein, bitte.</div></div>
+        <div class="entry"><div class="it">Vorrei una bottiglia di vino, per favore.<span class="pron">vorrei una bottilja di vino, per favore</span></div><div class="de">Ich möchte eine Flasche Wein, bitte.</div></div>
+        <div class="entry"><div class="it">Un caffè, per favore.<span class="pron">un kaffe, per favore</span></div><div class="de">Einen Kaffee, bitte.</div></div>
+        <div class="entry"><div class="it">Ancora una bottiglia d’acqua, per favore.<span class="pron">ankora una bottilja dak-kwa, per favore</span></div><div class="de">Noch eine Flasche Wasser, bitte.</div></div>
+      </section>
+
+      <section data-category="restaurant">
+        <h2>Restaurant · Rechnung und Rückmeldung</h2>
+        <div class="entry"><div class="it">Posso avere il conto, per favore?<span class="pron">posso avere il konto, per favore</span></div><div class="de">Kann ich bitte die Rechnung haben?</div></div>
+        <div class="entry"><div class="it">Il conto, per favore.<span class="pron">il konto, per favore</span></div><div class="de">Die Rechnung, bitte.</div></div>
+        <div class="entry"><div class="it">Posso pagare con la carta?<span class="pron">posso pagare kon la karta</span></div><div class="de">Kann ich mit Karte bezahlen?</div></div>
+        <div class="entry"><div class="it">Posso pagare la mancia con la carta?<span class="pron">posso pagare la mantscha kon la karta</span></div><div class="de">Kann ich das Trinkgeld mit Karte bezahlen?</div></div>
+        <div class="entry"><div class="it">È molto buono.<span class="pron">e molto buono</span></div><div class="de">Es schmeckt sehr gut.</div></div>
+        <div class="entry"><div class="it">Era delizioso.<span class="pron">era delizioso</span></div><div class="de">Es war köstlich.</div></div>
+        <div class="entry"><div class="it">È stato molto buono.<span class="pron">e stato molto buono</span></div><div class="de">Es war sehr gut.</div></div>
+      </section>
+
+      <section data-category="alltag">
+        <h2>Alltag · Grundwörter und Satzmuster</h2>
+        <div class="entry"><div class="it">ragazzo<span class="pron">ragattso</span></div><div class="de">Junge / junger Mann</div></div>
+        <div class="entry"><div class="it">ragazza<span class="pron">ragattsa</span></div><div class="de">Mädchen / junge Frau</div></div>
+        <div class="entry"><div class="it">ragazzi<span class="pron">ragattsi</span></div><div class="de">Jungen / junge Leute · als Anrede: Leute!</div></div>
+        <div class="entry"><div class="it">ragazze<span class="pron">ragattse</span></div><div class="de">Mädchen / junge Frauen</div></div>
+        <div class="entry"><div class="it">Oggi<span class="pron">oddschi</span></div><div class="de">heute</div></div>
+        <div class="entry"><div class="it">Adesso<span class="pron">adesso</span></div><div class="de">jetzt / nun</div></div>
+        <div class="entry"><div class="it">Ma<span class="pron">ma</span></div><div class="de">aber</div></div>
+        <div class="entry"><div class="it">Ho …<span class="pron">o</span></div><div class="de">Ich habe …</div></div>
+        <div class="entry"><div class="it">Voglio<span class="pron">wolljo</span></div><div class="de">Ich will / ich möchte (direkt; <em>vorrei</em> ist höflicher).</div></div>
+        <div class="entry"><div class="it">Voglio un caffè.<span class="pron">wolljo un kaffe</span></div><div class="de">Ich möchte einen Kaffee.</div></div>
+        <div class="entry"><div class="it">Non voglio.<span class="pron">non wolljo</span></div><div class="de">Ich will nicht.</div></div>
+      </section>
+
+      <section data-category="herkunft">
+        <h2>Herkunft und Nationalität · CBI 1–03</h2>
+        <div class="entry"><div class="it">Sei<span class="pron">säi</span></div><div class="de">du bist (2. Person Singular von <em>essere</em>)</div></div>
+        <div class="entry"><div class="it">Di dove sei?<span class="pron">di dowe säi</span></div><div class="de">Woher kommst du? (informell)</div></div>
+        <div class="entry"><div class="it">Di dov’è?<span class="pron">di dowe</span></div><div class="de">Woher kommen Sie? (höflich)</div></div>
+        <div class="entry"><div class="it">Sono di Berlino.<span class="pron">sono di berlino</span></div><div class="de">Ich komme aus Berlin.</div></div>
+        <div class="entry"><div class="it">Sono tedesco.<span class="pron">sono tedesko</span></div><div class="de">Ich bin Deutscher.</div></div>
+        <div class="entry"><div class="it">Veniamo da Alessio.<span class="pron">wenjamo da Alessjo</span></div><div class="de">Wir kommen von Alessio.</div></div>
+        <div class="entry"><div class="it">E tu? Di dove sei?<span class="pron">e tu, di dowe säi</span></div><div class="de">Und du? Woher kommst du?</div></div>
+        <div class="entry"><div class="it">E Lei? Di dov’è?<span class="pron">e läi, di dowe</span></div><div class="de">Und Sie? Woher kommen Sie?</div></div>
+        <div class="entry"><div class="it">Sono tedesca.<span class="pron">sono tedeska</span></div><div class="de">Ich bin Deutsche.</div></div>
+        <div class="entry"><div class="it">italiano / italiana<span class="pron">italjano / italjana</span></div><div class="de">italienisch / Italiener / Italienerin</div></div>
+        <div class="entry"><div class="it">americano / americana<span class="pron">amerikano / amerikana</span></div><div class="de">amerikanisch / Amerikaner / Amerikanerin</div></div>
+        <div class="entry"><div class="it">spagnolo / spagnola<span class="pron">spanjolo / spanjola</span></div><div class="de">spanisch / Spanier / Spanierin</div></div>
+        <div class="entry"><div class="it">francese<span class="pron">frantschese</span></div><div class="de">französisch / Franzose / Französin</div></div>
+        <div class="entry"><div class="it">scozzese<span class="pron">skottsese</span></div><div class="de">schottisch / Schotte / Schottin</div></div>
+        <div class="entry"><div class="it">irlandese<span class="pron">irlandese</span></div><div class="de">irisch / Ire / Irin</div></div>
+      </section>
+
+      <section data-category="herkunft">
+        <h2>Wohnort und Länder · CBI 1–04</h2>
+        <div class="entry"><div class="it">Dove abiti?<span class="pron">dowe abiti</span></div><div class="de">Wo wohnst du? (informell)</div></div>
+        <div class="entry"><div class="it">Dove abita?<span class="pron">dowe abita</span></div><div class="de">Wo wohnen Sie? (höflich)</div></div>
+        <div class="entry"><div class="it">Abito in Germania.<span class="pron">abito in dschermania</span></div><div class="de">Ich wohne / lebe in Deutschland.</div></div>
+        <div class="entry"><div class="it">Abito a Berlino, in Germania.<span class="pron">abito a berlino, in dschermania</span></div><div class="de">Ich wohne in Berlin, in Deutschland.</div></div>
+        <div class="entry"><div class="it">Abito a Firenze, in Italia.<span class="pron">abito a firentse, in italja</span></div><div class="de">Ich wohne in Florenz, in Italien.</div></div>
+        <div class="entry"><div class="it">Abito a Glasgow, in Scozia.<span class="pron">abito a gläsgou, in skotsja</span></div><div class="de">Ich wohne in Glasgow, in Schottland.</div></div>
+        <div class="entry"><div class="it">Abito a Londra, in Inghilterra.<span class="pron">abito a londra, in ingilterra</span></div><div class="de">Ich wohne in London, in England.</div></div>
+        <div class="entry"><div class="it">Abito a Dublino, in Irlanda.<span class="pron">abito a dublino, in irlanda</span></div><div class="de">Ich wohne in Dublin, in Irland.</div></div>
+        <div class="entry"><div class="it">Abito a New York, negli Stati Uniti.<span class="pron">abito a nju jork, nellji stati uniti</span></div><div class="de">Ich wohne in New York, in den USA.</div></div>
+        <div class="entry"><div class="it">Abito a Sydney, in Australia.<span class="pron">abito a sidni, in australia</span></div><div class="de">Ich wohne in Sydney, in Australien.</div></div>
+        <div class="entry"><div class="it">Abito a Roma, in Italia. E tu?<span class="pron">abito a roma, in italja. e tu</span></div><div class="de">Ich wohne in Rom, in Italien. Und du?</div></div>
+        <div class="entry"><div class="it">Abito in Scozia, a Edimburgo.<span class="pron">abito in skotsja, a edimburgo</span></div><div class="de">Ich wohne in Schottland, in Edinburgh.</div></div>
+        <div class="entry"><div class="it">Abiti a Milano?<span class="pron">abiti a milano</span></div><div class="de">Wohnst du in Mailand?</div></div>
+        <div class="entry"><div class="it">No, non abito a Milano.<span class="pron">no, non abito a milano</span></div><div class="de">Nein, ich wohne nicht in Mailand.</div></div>
+        <div class="entry"><div class="it">Abito a Trieste.<span class="pron">abito a trieste</span></div><div class="de">Ich wohne in Triest.</div></div>
+      </section>
+
+      <section data-category="unterwegs">
+        <h2>Unterwegs und Parken</h2>
+        <div class="entry"><div class="it">Dov’è il parcheggio?<span class="pron">dowe il parkeddscho</span></div><div class="de">Wo ist der Parkplatz?</div></div>
+        <div class="entry"><div class="it">Dove posso parcheggiare?<span class="pron">dowe posso parkeddschare</span></div><div class="de">Wo kann ich parken?</div></div>
+        <div class="entry"><div class="it">Possiamo parcheggiare qui?<span class="pron">possjamo parkeddschare kwi</span></div><div class="de">Können wir hier parken?</div></div>
+        <div class="entry"><div class="it">C’è un parcheggio qui vicino?<span class="pron">tsche un parkeddscho kwi witschino</span></div><div class="de">Gibt es hier in der Nähe einen Parkplatz?</div></div>
+        <div class="entry"><div class="it">Un biglietto per …, per favore.<span class="pron">un biljett-o per, per favore</span></div><div class="de">Eine Fahrkarte nach …, bitte.</div></div>
+      </section>
+
+      <section data-category="smalltalk">
+        <h2>Small Talk</h2>
+        <div class="entry"><div class="it">Sono in vacanza.<span class="pron">sono in wakantsa</span></div><div class="de">Ich bin im Urlaub.</div></div>
+        <div class="entry"><div class="it">Sto imparando l’italiano.<span class="pron">sto imparando litaljano</span></div><div class="de">Ich lerne gerade Italienisch.</div></div>
+        <div class="entry"><div class="it">Parlo solo un po’ d’italiano.<span class="pron">parlo solo un po ditaljano</span></div><div class="de">Ich spreche nur ein bisschen Italienisch.</div></div>
+        <div class="entry"><div class="it">Mi piace molto qui.<span class="pron">mi pjatsche molto kwi</span></div><div class="de">Mir gefällt es hier sehr.</div></div>
+        <div class="entry"><div class="it">È la mia prima volta qui.<span class="pron">e la mia prima wolta kwi</span></div><div class="de">Ich bin zum ersten Mal hier.</div></div>
+        <div class="entry"><div class="it">Da quanto tempo sei qui?<span class="pron">da kwanto tempo säi kwi</span></div><div class="de">Wie lange bist du schon hier?</div></div>
+        <div class="entry"><div class="it">Quanto tempo resti qui?<span class="pron">kwanto tempo resti kwi</span></div><div class="de">Wie lange bleibst du hier?</div></div>
+        <div class="entry"><div class="it">Sei di qui?<span class="pron">säi di kwi</span></div><div class="de">Kommst du von hier?</div></div>
+        <div class="entry"><div class="it">Che bel posto!<span class="pron">ke bel posto</span></div><div class="de">Was für ein schöner Ort!</div></div>
+        <div class="entry"><div class="it">Che bella giornata!<span class="pron">ke bella dschornata</span></div><div class="de">Was für ein schöner Tag!</div></div>
+        <div class="entry"><div class="it">Lavoro in un ministero.<span class="pron">laworo in un ministero</span></div><div class="de">Ich arbeite in einem Ministerium.</div></div>
+        <div class="entry"><div class="it">E tu? Cosa fai?<span class="pron">e tu, kosa fai</span></div><div class="de">Und du? Was machst du beruflich / was machst du?</div></div>
+        <div class="entry"><div class="it">Berlino è bella.<span class="pron">Berlino e bella</span></div><div class="de">Berlin ist schön.</div></div>
+        <div class="entry"><div class="it">Mi piace cucinare la pasta.<span class="pron">mi pjatsche kutschinare la pasta</span></div><div class="de">Ich koche gerne Pasta.</div></div>
+        <div class="entry"><div class="it">Voglio imparare l’italiano.<span class="pron">wolljo imparare litaljano</span></div><div class="de">Ich will Italienisch lernen.</div></div>
+        <div class="entry"><div class="it">Cosa insegni all’università?<span class="pron">kosa insenji all-universita</span></div><div class="de">Was unterrichtest du an der Universität?</div></div>
+        <div class="entry"><div class="it">Quali materie insegni all’università?<span class="pron">kwali materje insenji all-universita</span></div><div class="de">Welche Fächer unterrichtest du an der Universität?</div></div>
+        <div class="entry"><div class="it">Insegno tedesco.<span class="pron">insenjo tedesko</span></div><div class="de">Ich unterrichte Deutsch.</div></div>
+      </section>
+
+      <section data-category="alltag">
+        <h2>Telefonnummer · CBI 1–06</h2>
+        <div class="entry"><div class="it">il numero di telefono<span class="pron">il numero di telefono</span></div><div class="de">die Telefonnummer</div></div>
+        <div class="entry"><div class="it">Qual è il tuo numero di telefono?<span class="pron">kwal e il tuo numero di telefono</span></div><div class="de">Wie lautet deine Telefonnummer?</div></div>
+        <div class="entry"><div class="it">Il mio numero di telefono è …<span class="pron">il mio numero di telefono e</span></div><div class="de">Meine Telefonnummer ist …</div></div>
+      </section>
+
+      <section data-category="familie">
+        <h2>Familie · CBI 1–05 und 1–06</h2>
+        <div class="entry"><div class="it">la famiglia<span class="pron">la familja</span></div><div class="de">die Familie</div></div>
+        <div class="entry"><div class="it">mio padre<span class="pron">mio padre</span></div><div class="de">mein Vater</div></div>
+        <div class="entry"><div class="it">mia madre<span class="pron">mia madre</span></div><div class="de">meine Mutter</div></div>
+        <div class="entry"><div class="it">mio fratello<span class="pron">mio fratello</span></div><div class="de">mein Bruder</div></div>
+        <div class="entry"><div class="it">mia sorella<span class="pron">mia sorella</span></div><div class="de">meine Schwester</div></div>
+        <div class="entry"><div class="it">Ho un fratello.<span class="pron">o un fratello</span></div><div class="de">Ich habe einen Bruder.</div></div>
+        <div class="entry"><div class="it">ho<span class="pron">o</span></div><div class="de">ich habe</div></div>
+        <div class="entry"><div class="it">hai<span class="pron">ai</span></div><div class="de">du hast</div></div>
+        <div class="entry"><div class="it">Hai fratelli o sorelle?<span class="pron">ai fratelli o sorelle</span></div><div class="de">Hast du Brüder oder Schwestern?</div></div>
+        <div class="entry"><div class="it">Hai un fratello?<span class="pron">ai un fratello</span></div><div class="de">Hast du einen Bruder?</div></div>
+        <div class="entry"><div class="it">Hai una sorella?<span class="pron">ai una sorella</span></div><div class="de">Hast du eine Schwester?</div></div>
+        <div class="entry"><div class="it">Ho una sorella.<span class="pron">o una sorella</span></div><div class="de">Ich habe eine Schwester.</div></div>
+        <div class="entry"><div class="it">Ho due fratelli.<span class="pron">o due fratelli</span></div><div class="de">Ich habe zwei Brüder.</div></div>
+        <div class="entry"><div class="it">No, non ho fratelli.<span class="pron">no, non o fratelli</span></div><div class="de">Nein, ich habe keine Brüder.</div></div>
+        <div class="entry"><div class="it">No, non ho sorelle.<span class="pron">no, non o sorelle</span></div><div class="de">Nein, ich habe keine Schwestern.</div></div>
+        <div class="entry"><div class="it">Non ho fratelli o sorelle.<span class="pron">non o fratelli o sorelle</span></div><div class="de">Ich habe keine Brüder oder Schwestern.</div></div>
+        <div class="entry"><div class="it">mio figlio<span class="pron">mio filjo</span></div><div class="de">mein Sohn</div></div>
+        <div class="entry"><div class="it">mia figlia<span class="pron">mia filja</span></div><div class="de">meine Tochter</div></div>
+        <div class="entry"><div class="it">mio marito<span class="pron">mio marito</span></div><div class="de">mein Ehemann</div></div>
+        <div class="entry"><div class="it">mia moglie<span class="pron">mia mollje</span></div><div class="de">meine Ehefrau</div></div>
+        <div class="entry"><div class="it">il mio compagno<span class="pron">il mio kompanjo</span></div><div class="de">mein Partner</div></div>
+        <div class="entry"><div class="it">la mia compagna<span class="pron">la mia kompanja</span></div><div class="de">meine Partnerin</div></div>
+        <div class="entry"><div class="it">Questo è mio padre.<span class="pron">kwesto e mio padre</span></div><div class="de">Das ist mein Vater.</div></div>
+        <div class="entry"><div class="it">Questa è mia madre.<span class="pron">kwesta e mia madre</span></div><div class="de">Das ist meine Mutter.</div></div>
+        <div class="entry"><div class="it">Questo è mio figlio.<span class="pron">kwesto e mio filjo</span></div><div class="de">Das ist mein Sohn.</div></div>
+        <div class="entry"><div class="it">Questo è mio marito.<span class="pron">kwesto e mio marito</span></div><div class="de">Das ist mein Ehemann.</div></div>
+        <div class="entry"><div class="it">Questa è mia moglie.<span class="pron">kwesta e mia mollje</span></div><div class="de">Das ist meine Ehefrau.</div></div>
+        <div class="entry"><div class="it">Questo è il mio compagno.<span class="pron">kwesto e il mio kompanjo</span></div><div class="de">Das ist mein Partner.</div></div>
+        <div class="entry"><div class="it">Questa è la mia compagna.<span class="pron">kwesta e la mia kompanja</span></div><div class="de">Das ist meine Partnerin.</div></div>
+        <div class="entry"><div class="it">Come si chiama tua madre?<span class="pron">kome si kjama tua madre</span></div><div class="de">Wie heißt deine Mutter?</div></div>
+        <div class="entry"><div class="it">Si chiama …<span class="pron">si kjama</span></div><div class="de">Er / Sie heißt …</div></div>
+      </section>
+
+      <section data-category="zahlen">
+        <h2>Zahlen</h2>
+        <div class="entry"><div class="it">zero<span class="pron">dsero</span></div><div class="de">0 · null</div></div>
+        <div class="entry"><div class="it">uno<span class="pron">uno</span></div><div class="de">1 · eins</div></div>
+        <div class="entry"><div class="it">due<span class="pron">due</span></div><div class="de">2 · zwei</div></div>
+        <div class="entry"><div class="it">tre<span class="pron">tre</span></div><div class="de">3 · drei</div></div>
+        <div class="entry"><div class="it">quattro<span class="pron">kwattro</span></div><div class="de">4 · vier</div></div>
+        <div class="entry"><div class="it">cinque<span class="pron">tschinkwe</span></div><div class="de">5 · fünf</div></div>
+        <div class="entry"><div class="it">sei<span class="pron">säi</span></div><div class="de">6 · sechs</div></div>
+        <div class="entry"><div class="it">sette<span class="pron">sette</span></div><div class="de">7 · sieben</div></div>
+        <div class="entry"><div class="it">otto<span class="pron">otto</span></div><div class="de">8 · acht</div></div>
+        <div class="entry"><div class="it">nove<span class="pron">nowe</span></div><div class="de">9 · neun</div></div>
+        <div class="entry"><div class="it">dieci<span class="pron">djättschi</span></div><div class="de">10 · zehn</div></div>
+        <div class="entry"><div class="it">undici<span class="pron">unditschi</span></div><div class="de">11 · elf</div></div>
+        <div class="entry"><div class="it">dodici<span class="pron">doditschi</span></div><div class="de">12 · zwölf</div></div>
+        <div class="entry"><div class="it">tredici<span class="pron">treditschi</span></div><div class="de">13 · dreizehn</div></div>
+        <div class="entry"><div class="it">quattordici<span class="pron">kwattorditschi</span></div><div class="de">14 · vierzehn</div></div>
+        <div class="entry"><div class="it">quindici<span class="pron">kwinditschi</span></div><div class="de">15 · fünfzehn</div></div>
+        <div class="entry"><div class="it">sedici<span class="pron">seditschi</span></div><div class="de">16 · sechzehn</div></div>
+        <div class="entry"><div class="it">diciassette<span class="pron">ditschassette</span></div><div class="de">17 · siebzehn</div></div>
+        <div class="entry"><div class="it">diciotto<span class="pron">ditschotto</span></div><div class="de">18 · achtzehn</div></div>
+        <div class="entry"><div class="it">diciannove<span class="pron">ditschannowe</span></div><div class="de">19 · neunzehn</div></div>
+        <div class="entry"><div class="it">venti<span class="pron">wenti</span></div><div class="de">20 · zwanzig</div></div>
+        <div class="entry"><div class="it">ventuno<span class="pron">wentuno</span></div><div class="de">21 · einundzwanzig</div></div>
+        <div class="entry"><div class="it">ventidue<span class="pron">wentidue</span></div><div class="de">22 · zweiundzwanzig</div></div>
+        <div class="entry"><div class="it">ventitré<span class="pron">wentitre</span></div><div class="de">23 · dreiundzwanzig</div></div>
+        <div class="entry"><div class="it">ventiquattro<span class="pron">wentikwattro</span></div><div class="de">24 · vierundzwanzig</div></div>
+        <div class="entry"><div class="it">venticinque<span class="pron">wentitschinkwe</span></div><div class="de">25 · fünfundzwanzig</div></div>
+        <div class="entry"><div class="it">ventisei<span class="pron">wentisäi</span></div><div class="de">26 · sechsundzwanzig</div></div>
+        <div class="entry"><div class="it">ventisette<span class="pron">wentisette</span></div><div class="de">27 · siebenundzwanzig</div></div>
+        <div class="entry"><div class="it">ventotto<span class="pron">wentotto</span></div><div class="de">28 · achtundzwanzig</div></div>
+        <div class="entry"><div class="it">ventinove<span class="pron">wentinowe</span></div><div class="de">29 · neunundzwanzig</div></div>
+        <div class="entry"><div class="it">trenta<span class="pron">trenta</span></div><div class="de">30 · dreißig</div></div>
+        <div class="entry"><div class="it">quaranta<span class="pron">kwaranta</span></div><div class="de">40 · vierzig</div></div>
+        <div class="entry"><div class="it">cinquanta<span class="pron">tschinkwanta</span></div><div class="de">50 · fünfzig</div></div>
+        <div class="entry"><div class="it">sessanta<span class="pron">sessanta</span></div><div class="de">60 · sechzig</div></div>
+        <div class="entry"><div class="it">settanta<span class="pron">settanta</span></div><div class="de">70 · siebzig</div></div>
+        <div class="entry"><div class="it">ottanta<span class="pron">ottanta</span></div><div class="de">80 · achtzig</div></div>
+        <div class="entry"><div class="it">novanta<span class="pron">nowanta</span></div><div class="de">90 · neunzig</div></div>
+        <div class="entry"><div class="it">cento<span class="pron">tschento</span></div><div class="de">100 · einhundert</div></div>
+        <div class="entry"><div class="it">duecento<span class="pron">duetschento</span></div><div class="de">200 · zweihundert</div></div>
+        <div class="entry"><div class="it">trecento<span class="pron">tretschento</span></div><div class="de">300 · dreihundert</div></div>
+        <div class="entry"><div class="it">quattrocento<span class="pron">kwattrotschento</span></div><div class="de">400 · vierhundert</div></div>
+        <div class="entry"><div class="it">cinquecento<span class="pron">tschinkwetschento</span></div><div class="de">500 · fünfhundert</div></div>
+        <div class="entry"><div class="it">seicento<span class="pron">säitschento</span></div><div class="de">600 · sechshundert</div></div>
+        <div class="entry"><div class="it">settecento<span class="pron">settetschento</span></div><div class="de">700 · siebenhundert</div></div>
+        <div class="entry"><div class="it">ottocento<span class="pron">ottotschento</span></div><div class="de">800 · achthundert</div></div>
+        <div class="entry"><div class="it">novecento<span class="pron">nowetschento</span></div><div class="de">900 · neunhundert</div></div>
+        <div class="entry"><div class="it">mille<span class="pron">mille</span></div><div class="de">1.000 · eintausend</div></div>
+        <div class="entry"><div class="it">duemila<span class="pron">duemila</span></div><div class="de">2.000 · zweitausend</div></div>
+        <div class="entry"><div class="it">tremila<span class="pron">tremila</span></div><div class="de">3.000 · dreitausend</div></div>
+        <div class="entry"><div class="it">quattromila<span class="pron">kwattromila</span></div><div class="de">4.000 · viertausend</div></div>
+        <div class="entry"><div class="it">cinquemila<span class="pron">tschinkwemila</span></div><div class="de">5.000 · fünftausend</div></div>
+        <div class="entry"><div class="it">seimila<span class="pron">säimila</span></div><div class="de">6.000 · sechstausend</div></div>
+        <div class="entry"><div class="it">settemila<span class="pron">settemila</span></div><div class="de">7.000 · siebentausend</div></div>
+        <div class="entry"><div class="it">ottomila<span class="pron">ottomila</span></div><div class="de">8.000 · achttausend</div></div>
+        <div class="entry"><div class="it">novemila<span class="pron">nowemila</span></div><div class="de">9.000 · neuntausend</div></div>
+        <div class="entry"><div class="it">diecimila<span class="pron">djättschimila</span></div><div class="de">10.000 · zehntausend</div></div>
+      </section>
+    </div>
+
+    <div class="empty" id="empty">Nichts gefunden – probiere einen anderen Suchbegriff.</div>
+    <footer>Zuletzt ergänzt: 12. August 2026 · Babbel Lektion 2 · Italienisches Alphabet · Tipp: Mit ⌘ F kannst du zusätzlich die Browsersuche öffnen.</footer>
+  </main>
+
+  <script>
+    const search = document.querySelector('#search');
+    const sections = [...document.querySelectorAll('section')];
+    const buttons = [...document.querySelectorAll('button[data-filter]')];
+    const empty = document.querySelector('#empty');
+    let activeFilter = 'all';
+
+    function refresh() {
+      const query = search.value.trim().toLocaleLowerCase('de');
+      let visibleCount = 0;
+
+      sections.forEach(section => {
+        const categoryMatches = activeFilter === 'all' || section.dataset.category === activeFilter;
+        let sectionCount = 0;
+        section.querySelectorAll('.entry').forEach(entry => {
+          const matches = !query || entry.textContent.toLocaleLowerCase('de').includes(query);
+          entry.hidden = !(categoryMatches && matches);
+          if (!entry.hidden) sectionCount++;
+        });
+        section.hidden = sectionCount === 0;
+        visibleCount += sectionCount;
+      });
+      empty.style.display = visibleCount ? 'none' : 'block';
+    }
+
+    search.addEventListener('input', refresh);
+    buttons.forEach(button => button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      buttons.forEach(item => item.classList.toggle('active', item === button));
+      refresh();
+    }));
+  </script>
+</body>
+</html>

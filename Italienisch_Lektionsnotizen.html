@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#247451">
+  <title>Italienisch – Lektionsnotizen</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4f1e9;
+      --card: rgba(255,255,255,.9);
+      --text: #1e2a22;
+      --muted: #68736b;
+      --line: #d9ded8;
+      --green: #247451;
+      --green-soft: #dcefe4;
+      --red: #b7453e;
+      --red-soft: #f7e3df;
+      --gold: #a06c13;
+      --gold-soft: #fff2cf;
+      --shadow: 0 14px 35px rgba(31,54,42,.10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 88% 0%, rgba(183,69,62,.12), transparent 27rem),
+        radial-gradient(circle at 0% 22%, rgba(36,116,81,.13), transparent 30rem),
+        var(--bg);
+    }
+    main { width: min(940px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+    header { margin-bottom: 26px; }
+    .eyebrow {
+      color: var(--red); font-size: .8rem; font-weight: 760;
+      letter-spacing: .13em; text-transform: uppercase;
+    }
+    h1 {
+      margin: 8px 0 8px; max-width: 780px;
+      font-size: clamp(2.2rem, 7vw, 4.5rem); letter-spacing: -.06em; line-height: .98;
+    }
+    .subtitle { max-width: 720px; margin: 0; color: var(--muted); font-size: 1.06rem; line-height: 1.55; }
+    nav {
+      position: sticky; top: 10px; z-index: 10;
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin: 26px 0 30px; padding: 12px;
+      border: 1px solid rgba(255,255,255,.62); border-radius: 20px;
+      background: rgba(255,255,255,.74); backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+    nav button {
+      border: 0; cursor: pointer;
+      padding: 9px 13px; border-radius: 999px;
+      color: var(--green); background: var(--green-soft);
+      font: inherit; font-size: .88rem; font-weight: 700;
+    }
+    nav button.active {
+      color: #fff; background: var(--green);
+    }
+    article {
+      scroll-margin-top: 94px;
+      margin: 22px 0; padding: 26px;
+      border: 1px solid rgba(217,222,216,.92); border-radius: 24px;
+      background: var(--card); box-shadow: var(--shadow);
+    }
+    .lesson-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; margin-bottom: 20px;
+    }
+    .lesson-no {
+      display: inline-flex; align-items: center; min-height: 30px;
+      padding: 6px 11px; border-radius: 999px;
+      color: var(--red); background: var(--red-soft);
+      font-size: .76rem; font-weight: 780; letter-spacing: .08em; text-transform: uppercase;
+    }
+    h2 { margin: 7px 0 4px; font-size: clamp(1.55rem, 4vw, 2.25rem); letter-spacing: -.035em; }
+    h3 { margin: 24px 0 10px; font-size: 1.05rem; }
+    p { line-height: 1.6; }
+    .goal {
+      margin: 0 0 20px; padding: 14px 16px;
+      border-left: 4px solid var(--green); border-radius: 0 14px 14px 0;
+      background: var(--green-soft); line-height: 1.55;
+    }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .phrase, .rule-card {
+      padding: 16px; border: 1px solid var(--line); border-radius: 16px;
+      background: rgba(255,255,255,.46);
+    }
+    .it { font-size: 1.05rem; font-weight: 760; }
+    .pron { display: block; margin-top: 5px; color: var(--green); font-size: .82rem; font-weight: 590; }
+    .pron::before { content: "Aussprache: "; color: var(--muted); font-weight: 500; }
+    .de { margin-top: 7px; color: var(--muted); font-size: .94rem; }
+    .rule {
+      margin: 18px 0; padding: 19px;
+      border: 1px solid #ead59e; border-radius: 18px; background: var(--gold-soft);
+    }
+    .rule strong.title { display: block; margin-bottom: 7px; color: var(--gold); font-size: 1rem; }
+    .rule p { margin: 7px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { padding: 11px 10px; border-top: 1px solid rgba(160,108,19,.2); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; }
+    .dialogue {
+      margin-top: 12px; padding: 16px 18px;
+      border-radius: 18px; background: rgba(36,116,81,.075);
+    }
+    .line { display: grid; grid-template-columns: 28px 1fr; gap: 8px; margin: 9px 0; line-height: 1.5; }
+    .speaker { color: var(--green); font-weight: 800; }
+    .translation { color: var(--muted); font-size: .88rem; }
+    .memory {
+      margin-top: 18px; padding: 15px 17px; border-radius: 16px;
+      color: #fff; background: linear-gradient(135deg, var(--green), #31906a);
+      line-height: 1.55;
+    }
+    details {
+      margin: 10px 0; border: 1px solid var(--line); border-radius: 14px;
+      background: rgba(255,255,255,.42);
+    }
+    summary { padding: 14px 16px; cursor: pointer; font-weight: 700; }
+    details p { margin: 0; padding: 0 16px 15px; color: var(--muted); }
+    footer { padding-top: 22px; text-align: center; color: var(--muted); font-size: .85rem; }
+    @media (max-width: 680px) {
+      main { width: min(100% - 20px, 940px); padding-top: 28px; }
+      article { padding: 20px 17px; border-radius: 20px; }
+      .grid { grid-template-columns: 1fr; }
+      nav { top: 6px; overflow-x: auto; flex-wrap: nowrap; }
+      nav button { flex: 0 0 auto; }
+      .lesson-head { display: block; }
+      th, td { padding: 9px 6px; font-size: .88rem; }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:#141a16; --card:rgba(28,37,31,.92); --text:#eff5f0; --muted:#afbbb2;
+        --line:#3b463e; --green:#59b987; --green-soft:#263f31; --red:#e27e76;
+        --red-soft:#482c2b; --gold:#e3b553; --gold-soft:#3c3420;
+        --shadow:0 14px 35px rgba(0,0,0,.22);
+      }
+      nav { background: rgba(29,37,32,.8); border-color: rgba(255,255,255,.08); }
+      .phrase, .rule-card, details { background: rgba(15,22,17,.42); }
+      .dialogue { background: rgba(89,185,135,.08); }
+    }
+    @media print {
+      body { color: #111; background: #fff; }
+      main { width: 100%; padding: 0; }
+      nav, footer { display: none; }
+      article[hidden] { display: block !important; }
+      article { box-shadow: none; break-inside: avoid; }
+      details p { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Il mio italiano</div>
+      <h1>Lektionsnotizen 🇮🇹</h1>
+      <p class="subtitle">
+        Dein persönlicher Lernkurs mit Beispielen aus Berlin:
+        nicht nur Wörter lernen, sondern Muster verstehen und selbst anwenden.
+      </p>
+    </header>
+
+    <nav aria-label="Lektion auswählen">
+      <button class="active" data-lesson-filter="all">Alle</button>
+      <button data-lesson-filter="1">1 · Erste Begegnung</button>
+      <button data-lesson-filter="2">2 · Kontaktdaten</button>
+      <button data-lesson-filter="3">3 · Herkunft</button>
+      <button data-lesson-filter="4">4 · Wohnort</button>
+      <button data-lesson-filter="5">5 · Familie</button>
+      <button data-lesson-filter="check">Selbstcheck</button>
+    </nav>
+
+    <article id="lektion-1" data-lesson="1">
+      <div class="lesson-head">
+        <div>
+          <span class="lesson-no">Lektion 1</span>
+          <h2>Erste Begegnung – Begrüßen und Befinden</h2>
+        </div>
+      </div>
+
+      <p class="goal"><strong>Das kannst du danach:</strong> jemanden begrüßen, fragen, wie es ihm oder ihr geht, und kurz antworten.</p>
+
+      <h3>Begrüßungen nach Tageszeit</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Buongiorno!</div><span class="pron">buon-dschorno</span><div class="de">Guten Morgen! / Guten Tag!</div></div>
+        <div class="phrase"><div class="it">Buon pomeriggio!</div><span class="pron">buon pomeriddscho</span><div class="de">Guten Nachmittag!</div></div>
+        <div class="phrase"><div class="it">Buonasera!</div><span class="pron">buona-sera</span><div class="de">Guten Abend!</div></div>
+        <div class="phrase"><div class="it">Buonanotte!</div><span class="pron">buona-notte</span><div class="de">Gute Nacht!</div></div>
+      </div>
+
+      <div class="rule" id="buon-buona">
+        <strong class="title">Verstehen: Warum buon und buona?</strong>
+        <p><strong>Buono</strong> bedeutet „gut“. Vor einem männlichen Wort steht hier <strong>buon</strong>, vor einem weiblichen <strong>buona</strong>:</p>
+        <p><strong>il giorno → buongiorno</strong> · <strong>il pomeriggio → buon pomeriggio</strong> · <strong>la sera → buonasera</strong> · <strong>la notte → buonanotte</strong></p>
+      </div>
+
+      <h3>Die wichtigsten Satzmuster</h3>
+      <div class="grid">
+        <div class="phrase">
+          <div class="it">Ciao!</div>
+          <span class="pron">tschau</span>
+          <div class="de">Hallo! / Tschüss! – informell</div>
+        </div>
+        <div class="phrase">
+          <div class="it">Come stai?</div>
+          <span class="pron">kome stai</span>
+          <div class="de">Wie geht es dir?</div>
+        </div>
+        <div class="phrase">
+          <div class="it">Come sta?</div>
+          <span class="pron">kome sta</span>
+          <div class="de">Wie geht es Ihnen?</div>
+        </div>
+        <div class="phrase">
+          <div class="it">Bene, grazie. E tu?</div>
+          <span class="pron">bene, gratsje. e tu</span>
+          <div class="de">Gut, danke. Und dir?</div>
+        </div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Verstehen: stai oder sta?</strong>
+        <p><strong>Come stai?</strong> benutzt du bei Freunden, Familie und Menschen, die du duzt.</p>
+        <p><strong>Come sta?</strong> ist die höfliche Form für Menschen, die du siezt.</p>
+        <p>Auch die Rückfrage passt sich an: <strong>E tu?</strong> = Und du? · <strong>E Lei?</strong> = Und Sie?</p>
+      </div>
+
+      <h3>So kannst du antworten</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Molto bene.</div><span class="pron">molto bene</span><div class="de">Sehr gut.</div></div>
+        <div class="phrase"><div class="it">Così così.</div><span class="pron">kosi kosi</span><div class="de">So lala.</div></div>
+        <div class="phrase"><div class="it">Non c’è male.</div><span class="pron">non tsche male</span><div class="de">Nicht schlecht.</div></div>
+        <div class="phrase"><div class="it">Male.</div><span class="pron">male</span><div class="de">Schlecht.</div></div>
+        <div class="phrase"><div class="it">Sono un po’ stanco.</div><span class="pron">sono un po stanko</span><div class="de">Ich bin ein bisschen müde.</div></div>
+        <div class="phrase"><div class="it">Ho troppo lavoro.</div><span class="pron">o troppo laworo</span><div class="de">Ich habe zu viel Arbeit.</div></div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Persönlich antworten</strong>
+        <p>Als Mann sagst du <strong>stanco</strong>, als Frau <strong>stanca</strong>. Für dich passt also: <strong>Sono un po’ stanco.</strong></p>
+        <p><strong>Un po’</strong> bedeutet „ein bisschen“, <strong>troppo</strong> bedeutet „zu viel“.</p>
+      </div>
+
+      <h3>Mini-Dialog</h3>
+      <div class="dialogue">
+        <div class="line"><span class="speaker">A</span><div><strong>Ciao! Come stai?</strong><br><span class="translation">Hallo! Wie geht es dir?</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Sono un po’ stanco. Ho troppo lavoro. E tu?</strong><br><span class="translation">Ich bin ein bisschen müde. Ich habe zu viel Arbeit. Und dir?</span></div></div>
+        <div class="line"><span class="speaker">A</span><div><strong>Molto bene, grazie!</strong><br><span class="translation">Sehr gut, danke!</span></div></div>
+      </div>
+
+      <div class="memory"><strong>Merksatz:</strong> Bei <em>Come stai?</em> hörst du am Ende das <strong>i</strong> – das ist die Form für <strong>du</strong>.</div>
+    </article>
+
+    <article id="lektion-2" data-lesson="2">
+      <div class="lesson-head">
+        <div>
+          <span class="lesson-no">Lektion 2</span>
+          <h2>Kontaktdaten – Name, Alphabet und Telefonnummer</h2>
+        </div>
+      </div>
+
+      <p class="goal"><strong>Das kannst du danach:</strong> nach einem Namen und einer Telefonnummer fragen, dich vorstellen, Namen buchstabieren und Ziffern sicher nennen.</p>
+
+      <h3>Nach dem Namen fragen</h3>
+      <div class="grid">
+        <div class="phrase">
+          <div class="it">Come ti chiami?</div>
+          <span class="pron">kome ti kjami</span>
+          <div class="de">Wie heißt du? – informell</div>
+        </div>
+        <div class="phrase">
+          <div class="it">Come si chiama?</div>
+          <span class="pron">kome si kjama</span>
+          <div class="de">Wie heißen Sie? – höflich</div>
+        </div>
+        <div class="phrase">
+          <div class="it">Mi chiamo Tobias.</div>
+          <span class="pron">mi kjamo Tobias</span>
+          <div class="de">Ich heiße Tobias.</div>
+        </div>
+        <div class="phrase">
+          <div class="it">Piacere!</div>
+          <span class="pron">pjatschere</span>
+          <div class="de">Freut mich!</div>
+        </div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Verstehen: mi, ti und si</strong>
+        <p>Bei <strong>chiamarsi</strong> („heißen“) verändert sich das kleine Wort vor dem Verb:</p>
+        <p><strong>mi chiamo</strong> = ich heiße · <strong>ti chiami</strong> = du heißt · <strong>si chiama</strong> = Sie heißen / er oder sie heißt</p>
+        <p>Darum lautet die Frage <strong>Come ti chiami?</strong>, aber deine Antwort <strong>Mi chiamo Tobias.</strong></p>
+      </div>
+
+      <h3>Mini-Dialog</h3>
+      <div class="dialogue">
+        <div class="line"><span class="speaker">A</span><div><strong>Buongiorno! Come ti chiami?</strong><br><span class="translation">Guten Tag! Wie heißt du?</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Mi chiamo Tobias. E tu?</strong><br><span class="translation">Ich heiße Tobias. Und du?</span></div></div>
+        <div class="line"><span class="speaker">A</span><div><strong>Mi chiamo Luca. Piacere!</strong><br><span class="translation">Ich heiße Luca. Freut mich!</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Piacere mio!</strong><br><span class="translation">Ganz meinerseits!</span></div></div>
+      </div>
+
+      <div class="memory"><strong>Dein Satz:</strong> Die Frage beginnt mit <strong>ti</strong> („dich“), deine Antwort mit <strong>mi</strong> („mich“): <em>Come ti chiami? – Mi chiamo Tobias.</em></div>
+
+      <h3>Das italienische Alphabet</h3>
+      <div class="rule">
+        <strong class="title">21 Buchstaben und ihre Namen</strong>
+        <table>
+          <thead><tr><th>Buchstaben</th><th>So heißen sie auf Italienisch</th></tr></thead>
+          <tbody>
+            <tr><td><strong>A – B – C – D – E</strong></td><td>a – bi – ci – di – e</td></tr>
+            <tr><td><strong>F – G – H – I</strong></td><td>effe – gi – acca – i</td></tr>
+            <tr><td><strong>L – M – N – O</strong></td><td>elle – emme – enne – o</td></tr>
+            <tr><td><strong>P – Q – R – S – T</strong></td><td>pi – cu – erre – esse – ti</td></tr>
+            <tr><td><strong>U – V – Z</strong></td><td>u – vi / vu – zeta</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Aussprachehilfe:</strong> a – bi – tschi – di – e · effe – dschi – akka – i · elle – emme – enne – o · pi – ku – erre – esse – ti · u – wi/wu – dzeta.</p>
+        <p><strong>Besonderheit:</strong> J, K, W, X und Y gehören nicht zum klassischen italienischen Alphabet. Sie kommen hauptsächlich in Fremdwörtern und Namen vor: <strong>i lunga, kappa, doppia vu, ics, ipsilon</strong>.</p>
+      </div>
+
+      <div class="memory"><strong>Merksatz:</strong> Nach <strong>I</strong> geht es direkt mit <strong>L</strong> weiter – J und K sind Zusatzbuchstaben. Nach <strong>V</strong> folgt im klassischen Alphabet direkt <strong>Z</strong>.</div>
+
+      <h3>Zahlen für die Telefonnummer</h3>
+      <div class="rule">
+        <strong class="title">Ziffern einzeln sprechen</strong>
+        <p><strong>zero · uno · due · tre · quattro · cinque · sei · sette · otto · nove · dieci</strong></p>
+        <p>Bei einer Telefonnummer sprichst du die Ziffern normalerweise einzeln. Achte bei <strong>quattro</strong>, <strong>sette</strong> und <strong>otto</strong> auf die hörbaren Doppelkonsonanten.</p>
+      </div>
+
+      <h3>Nach der Telefonnummer fragen</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Il numero di telefono.</div><span class="pron">il numero di telefono</span><div class="de">Die Telefonnummer.</div></div>
+        <div class="phrase"><div class="it">Qual è il tuo numero di telefono?</div><span class="pron">kwal e il tuo numero di telefono</span><div class="de">Wie lautet deine Telefonnummer?</div></div>
+        <div class="phrase"><div class="it">Il mio numero di telefono è …</div><span class="pron">il mio numero di telefono e</span><div class="de">Meine Telefonnummer ist …</div></div>
+      </div>
+
+      <h3>Mini-Dialog: Kontaktdaten</h3>
+      <div class="dialogue">
+        <div class="line"><span class="speaker">A</span><div><strong>Come ti chiami?</strong><br><span class="translation">Wie heißt du?</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Mi chiamo Tobias.</strong><br><span class="translation">Ich heiße Tobias.</span></div></div>
+        <div class="line"><span class="speaker">A</span><div><strong>Qual è il tuo numero di telefono?</strong><br><span class="translation">Wie lautet deine Telefonnummer?</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Il mio numero di telefono è …</strong><br><span class="translation">Meine Telefonnummer ist …</span></div></div>
+      </div>
+
+    </article>
+
+    <article id="lektion-3" data-lesson="3">
+      <div class="lesson-head">
+        <div>
+          <span class="lesson-no">Lektion 3</span>
+          <h2>Woher kommst du? – Herkunft, Nationalität und „essere“</h2>
+        </div>
+      </div>
+
+      <p class="goal"><strong>Das kannst du danach:</strong> nach der Herkunft fragen, deine Stadt und Nationalität nennen und das Verb <em>essere</em> für eine oder mehrere Personen verwenden.</p>
+
+      <h3>Nach der Herkunft fragen</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Di dove sei?</div><span class="pron">di dowe säi</span><div class="de">Woher kommst du? – informell</div></div>
+        <div class="phrase"><div class="it">Di dov’è?</div><span class="pron">di dowe</span><div class="de">Woher kommen Sie? – höflich</div></div>
+        <div class="phrase"><div class="it">Sono di Berlino.</div><span class="pron">sono di berlino</span><div class="de">Ich komme aus Berlin.</div></div>
+        <div class="phrase"><div class="it">E Lei? Di dov’è?</div><span class="pron">e läi, di dowe</span><div class="de">Und Sie? Woher kommen Sie?</div></div>
+        <div class="phrase"><div class="it">Di dove siete?</div><span class="pron">di dowe sjete</span><div class="de">Woher kommt ihr? / Woher kommen Sie? – Mehrzahl</div></div>
+        <div class="phrase"><div class="it">Siamo di Berlino.</div><span class="pron">sjamo di berlino</span><div class="de">Wir kommen aus Berlin.</div></div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Personalpronomen: Einzahl und Mehrzahl</strong>
+        <table>
+          <thead><tr><th>Einzahl</th><th>Mehrzahl</th></tr></thead>
+          <tbody>
+            <tr><td><strong>io</strong> = ich</td><td><strong>noi</strong> = wir</td></tr>
+            <tr><td><strong>tu</strong> = du</td><td><strong>voi</strong> = ihr / Sie (Mehrzahl)</td></tr>
+            <tr><td><strong>lui / lei / Lei</strong> = er / sie / Sie</td><td><strong>loro</strong> = sie</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Lei</strong> mit großem L ist die höfliche Anrede für eine Person. <strong>lei</strong> mit kleinem l bedeutet „sie“.</p>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Essere in der Einzahl – zuerst diese drei Formen</strong>
+        <p><strong>Essere</strong> („sein“) ist unregelmäßig. Die Formen sehen also unterschiedlich aus und werden am besten als feste Paare gelernt:</p>
+        <div class="grid">
+          <div class="phrase"><div class="it">io <strong>sono</strong></div><span class="pron">io sono</span><div class="de">ich bin</div></div>
+          <div class="phrase"><div class="it">tu <strong>sei</strong></div><span class="pron">tu säi</span><div class="de">du bist</div></div>
+          <div class="phrase"><div class="it">lui / lei / Lei <strong>è</strong></div><span class="pron">lui / läi / läi ä</span><div class="de">er / sie ist · Sie sind</div></div>
+        </div>
+        <div class="dialogue">
+          <div class="line"><span class="speaker">IO</span><div><strong>Io sono di Berlino.</strong><br><span class="translation">Ich komme aus Berlin.</span></div></div>
+          <div class="line"><span class="speaker">TU</span><div><strong>Tu sei di Roma.</strong><br><span class="translation">Du kommst aus Rom.</span></div></div>
+          <div class="line"><span class="speaker">LUI</span><div><strong>Lui è di Milano.</strong><br><span class="translation">Er kommt aus Mailand.</span></div></div>
+        </div>
+        <p>Normalerweise lässt man <strong>io, tu, lui</strong> oder <strong>lei</strong> weg, wenn klar ist, wer gemeint ist. Zum Lernen helfen die Pronomen zunächst dabei, die Formen zuzuordnen.</p>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Essere in der Mehrzahl – wenn du über mehrere Personen sprichst</strong>
+        <p>Auch die Formen der Mehrzahl sind unregelmäßig. Lerne sie deshalb ebenfalls als feste Paare:</p>
+        <div class="grid">
+          <div class="phrase"><div class="it">noi <strong>siamo</strong></div><span class="pron">noi sjamo</span><div class="de">wir sind</div></div>
+          <div class="phrase"><div class="it">voi <strong>siete</strong></div><span class="pron">voi sjete</span><div class="de">ihr seid · Sie sind (Mehrzahl)</div></div>
+          <div class="phrase"><div class="it">loro <strong>sono</strong></div><span class="pron">loro sono</span><div class="de">sie sind</div></div>
+        </div>
+        <div class="dialogue">
+          <div class="line"><span class="speaker">NOI</span><div><strong>Noi siamo di Berlino.</strong><br><span class="translation">Wir kommen aus Berlin.</span></div></div>
+          <div class="line"><span class="speaker">VOI</span><div><strong>Voi siete di Roma.</strong><br><span class="translation">Ihr kommt aus Rom.</span></div></div>
+          <div class="line"><span class="speaker">LORO</span><div><strong>Loro sono di Milano.</strong><br><span class="translation">Sie kommen aus Mailand.</span></div></div>
+        </div>
+        <p>Auch hier kann das Pronomen meist wegfallen: <strong>Siamo di Berlino.</strong> ist im Gespräch natürlicher als <em>Noi siamo di Berlino.</em></p>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Das Verb essere – sein</strong>
+        <table>
+          <thead><tr><th>Person</th><th>Form</th><th>Deutsch</th></tr></thead>
+          <tbody>
+            <tr><td>io</td><td><strong>sono</strong></td><td>ich bin</td></tr>
+            <tr><td>tu</td><td><strong>sei</strong></td><td>du bist</td></tr>
+            <tr><td>lui / lei / Lei</td><td><strong>è</strong></td><td>er / sie ist · Sie sind</td></tr>
+            <tr><td>noi</td><td><strong>siamo</strong></td><td>wir sind</td></tr>
+            <tr><td>voi</td><td><strong>siete</strong></td><td>ihr seid · Sie sind</td></tr>
+            <tr><td>loro</td><td><strong>sono</strong></td><td>sie sind</td></tr>
+          </tbody>
+        </table>
+        <p>Das Pronomen kann im Italienischen oft wegfallen, weil die Verbform schon zeigt, wer gemeint ist: <strong>Sono di Berlino.</strong> statt <em>Io sono di Berlino.</em></p>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Verstehen: Stadt oder Nationalität?</strong>
+        <p>Für eine Stadt benutzt du <strong>sono di</strong>: <strong>Sono di Berlino.</strong> – Ich komme aus Berlin.</p>
+        <p>Für die Nationalität benutzt du <strong>sono</strong> ohne <em>di</em>: <strong>Sono tedesco.</strong> – Ich bin Deutscher.</p>
+        <p><strong>Sono</strong> bedeutet „ich bin“. Das persönliche <strong>io</strong> lässt man normalerweise weg, weil die Verbform bereits zeigt, wer gemeint ist.</p>
+      </div>
+
+      <h3>Nationalitäten passen sich an</h3>
+      <div class="rule">
+        <strong class="title">Meistens: -o männlich, -a weiblich</strong>
+        <table>
+          <thead><tr><th>Männlich</th><th>Weiblich</th><th>Deutsch</th></tr></thead>
+          <tbody>
+            <tr><td><strong>tedesco</strong></td><td><strong>tedesca</strong></td><td>deutsch</td></tr>
+            <tr><td><strong>italiano</strong></td><td><strong>italiana</strong></td><td>italienisch</td></tr>
+            <tr><td><strong>americano</strong></td><td><strong>americana</strong></td><td>amerikanisch</td></tr>
+            <tr><td><strong>spagnolo</strong></td><td><strong>spagnola</strong></td><td>spanisch</td></tr>
+          </tbody>
+        </table>
+        <p>Nationalitäten auf <strong>-ese</strong> haben für Mann und Frau dieselbe Form: <strong>francese</strong>, <strong>scozzese</strong>, <strong>irlandese</strong>.</p>
+      </div>
+
+      <h3>Mini-Dialog</h3>
+      <div class="dialogue">
+        <div class="line"><span class="speaker">A</span><div><strong>Di dove sei?</strong><br><span class="translation">Woher kommst du?</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Sono di Berlino. Sono tedesco. E tu?</strong><br><span class="translation">Ich komme aus Berlin. Ich bin Deutscher. Und du?</span></div></div>
+        <div class="line"><span class="speaker">A</span><div><strong>Sono di Torino. Sono italiano.</strong><br><span class="translation">Ich komme aus Turin. Ich bin Italiener.</span></div></div>
+      </div>
+
+      <div class="memory"><strong>Deine kurze Vorstellung:</strong> <em>Mi chiamo Tobias, sono tedesco e vengo da Berlino, in Germania.</em></div>
+
+      <div class="memory"><strong>Merksatz:</strong> <em>Sono di Berlino</em> nennt den Ort. <em>Sono tedesco</em> nennt die Nationalität. <strong>Sono</strong> kann außerdem „ich bin“ oder „sie sind“ bedeuten – der Zusammenhang macht klar, wer gemeint ist.</div>
+    </article>
+
+    <article id="lektion-4" data-lesson="4">
+      <div class="lesson-head">
+        <div>
+          <span class="lesson-no">Lektion 4</span>
+          <h2>Wo wohnst du? – Wohnort und „abitare“</h2>
+        </div>
+      </div>
+
+      <p class="goal"><strong>Das kannst du danach:</strong> nach dem Wohnort fragen, Stadt und Land nennen und sagen, wo du nicht wohnst.</p>
+
+      <h3>Nach dem Wohnort fragen</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Dove abiti?</div><span class="pron">dowe abiti</span><div class="de">Wo wohnst du? – informell</div></div>
+        <div class="phrase"><div class="it">Dove abita?</div><span class="pron">dowe abita</span><div class="de">Wo wohnen Sie? – höflich</div></div>
+        <div class="phrase"><div class="it">Abito a Berlino.</div><span class="pron">abito a berlino</span><div class="de">Ich wohne in Berlin.</div></div>
+        <div class="phrase"><div class="it">Abito in Germania.</div><span class="pron">abito in dschermania</span><div class="de">Ich wohne / lebe in Deutschland.</div></div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Abitare – wohnen · alle Formen</strong>
+        <p>Die Endung zeigt, wer wohnt. Die drei Formen der Einzahl und die drei Formen der Mehrzahl folgen einem regelmäßigen Muster:</p>
+        <div class="grid">
+          <div class="phrase"><div class="it">io <strong>abito</strong></div><span class="pron">io abito</span><div class="de">ich wohne</div></div>
+          <div class="phrase"><div class="it">tu <strong>abiti</strong></div><span class="pron">tu abiti</span><div class="de">du wohnst</div></div>
+          <div class="phrase"><div class="it">lui / lei / Lei <strong>abita</strong></div><span class="pron">lui / läi / läi abita</span><div class="de">er / sie wohnt · Sie wohnen</div></div>
+          <div class="phrase"><div class="it">noi <strong>abitiamo</strong></div><span class="pron">noi abitjamo</span><div class="de">wir wohnen</div></div>
+          <div class="phrase"><div class="it">voi <strong>abitate</strong></div><span class="pron">voi abitate</span><div class="de">ihr wohnt · Sie wohnen (Mehrzahl)</div></div>
+          <div class="phrase"><div class="it">loro <strong>abitano</strong></div><span class="pron">loro abitano</span><div class="de">sie wohnen</div></div>
+        </div>
+        <div class="dialogue">
+          <div class="line"><span class="speaker">IO</span><div><strong>Io abito a Berlino.</strong><br><span class="translation">Ich wohne in Berlin.</span></div></div>
+          <div class="line"><span class="speaker">TU</span><div><strong>Tu abiti a Roma.</strong><br><span class="translation">Du wohnst in Rom.</span></div></div>
+          <div class="line"><span class="speaker">LEI</span><div><strong>Lei abita a Milano.</strong><br><span class="translation">Sie wohnen in Mailand.</span></div></div>
+          <div class="line"><span class="speaker">NOI</span><div><strong>Noi abitiamo a Berlino.</strong><br><span class="translation">Wir wohnen in Berlin.</span></div></div>
+          <div class="line"><span class="speaker">VOI</span><div><strong>Voi abitate a Roma.</strong><br><span class="translation">Ihr wohnt in Rom.</span></div></div>
+          <div class="line"><span class="speaker">LORO</span><div><strong>Tom e Mark abitano in Germania.</strong><br><span class="translation">Tom und Mark wohnen in Deutschland.</span></div></div>
+        </div>
+        <p><strong>Tom e Mark</strong> sind mehrere Personen und funktionieren deshalb wie <strong>loro</strong>: <strong>Tom e Mark abitano</strong>. Im Gespräch fällt ein Pronomen meistens weg, wenn die Verbform schon zeigt, wer gemeint ist.</p>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Aussage oder Frage? Die Wortfolge bleibt gleich</strong>
+        <p>Im Italienischen wird eine Aussage meist nur durch die <strong>steigende Stimme</strong> zur Frage. Es gibt kein zusätzliches Hilfsverb wie im Englischen und die Wörter werden nicht umgestellt.</p>
+        <table>
+          <thead><tr><th>Person</th><th>Aussage</th><th>Frage</th></tr></thead>
+          <tbody>
+            <tr><td>io</td><td><strong>Io abito in Italia.</strong></td><td><strong>Abito in Italia?</strong></td></tr>
+            <tr><td>tu</td><td><strong>Tu abiti in Italia.</strong></td><td><strong>Abiti in Italia?</strong></td></tr>
+            <tr><td>lui / lei</td><td><strong>Lui / lei abita in Italia.</strong></td><td><strong>Abita in Italia?</strong></td></tr>
+            <tr><td>Lei</td><td><strong>Lei abita in Italia.</strong></td><td><strong>Abita in Italia?</strong></td></tr>
+            <tr><td>noi</td><td><strong>Noi abitiamo in Italia.</strong></td><td><strong>Abitiamo in Italia?</strong></td></tr>
+            <tr><td>voi</td><td><strong>Voi abitate in Italia.</strong></td><td><strong>Abitate in Italia?</strong></td></tr>
+            <tr><td>loro</td><td><strong>Loro abitano in Italia.</strong></td><td><strong>Abitano in Italia?</strong></td></tr>
+          </tbody>
+        </table>
+        <p>Die Pronomen dienen hier zur Orientierung. Natürlicher sind meistens die kurzen Formen: <strong>Abiti in Italia?</strong>, <strong>Abitate in Italia?</strong> oder <strong>Abitano in Italia?</strong> Der Zusammenhang zeigt, wer gemeint ist.</p>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Verstehen: a bei Städten, in bei Ländern</strong>
+        <p>Vor einer <strong>Stadt</strong> steht normalerweise <strong>a</strong>: <strong>Abito a Berlino.</strong></p>
+        <p>Vor einem <strong>Land</strong> steht normalerweise <strong>in</strong>: <strong>Abito in Germania.</strong></p>
+        <p>Beides lässt sich verbinden: <strong>Abito a Berlino, in Germania.</strong></p>
+      </div>
+
+      <h3>Beispiele aus der Folge</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Abito a Firenze, in Italia.</div><span class="pron">abito a firentse, in italja</span><div class="de">Ich wohne in Florenz, in Italien.</div></div>
+        <div class="phrase"><div class="it">Abito a Glasgow, in Scozia.</div><span class="pron">abito a gläsgou, in skotsja</span><div class="de">Ich wohne in Glasgow, in Schottland.</div></div>
+        <div class="phrase"><div class="it">Abito a Londra, in Inghilterra.</div><span class="pron">abito a londra, in ingilterra</span><div class="de">Ich wohne in London, in England.</div></div>
+        <div class="phrase"><div class="it">Abito a Dublino, in Irlanda.</div><span class="pron">abito a dublino, in irlanda</span><div class="de">Ich wohne in Dublin, in Irland.</div></div>
+        <div class="phrase"><div class="it">Abito a New York, negli Stati Uniti.</div><span class="pron">abito a nju jork, nellji stati uniti</span><div class="de">Ich wohne in New York, in den USA.</div></div>
+        <div class="phrase"><div class="it">Abito a Sydney, in Australia.</div><span class="pron">abito a sidni, in australia</span><div class="de">Ich wohne in Sydney, in Australien.</div></div>
+        <div class="phrase"><div class="it">Abito a Roma, in Italia. E tu?</div><span class="pron">abito a roma, in italja. e tu</span><div class="de">Ich wohne in Rom, in Italien. Und du?</div></div>
+        <div class="phrase"><div class="it">Abito in Scozia, a Edimburgo.</div><span class="pron">abito in skotsja, a edimburgo</span><div class="de">Ich wohne in Schottland, in Edinburgh.</div></div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Verstehen: Verneinen mit non</strong>
+        <p><strong>Non</strong> bedeutet meist <strong>„nicht“</strong> und steht direkt vor dem Verb. Du musst das Verb dafür nicht verändern.</p>
+        <div class="grid">
+          <div class="phrase"><div class="it">Non abito a Milano.</div><span class="pron">non abito a milano</span><div class="de">Ich wohne nicht in Mailand.</div></div>
+          <div class="phrase"><div class="it">Non sono italiano.</div><span class="pron">non sono italjano</span><div class="de">Ich bin kein Italiener.</div></div>
+          <div class="phrase"><div class="it">Non voglio un caffè.</div><span class="pron">non wolljo un kaffe</span><div class="de">Ich möchte keinen Kaffee.</div></div>
+          <div class="phrase"><div class="it">Non sto bene.</div><span class="pron">non sto bene</span><div class="de">Mir geht es nicht gut.</div></div>
+        </div>
+        <p><strong>No</strong> heißt allein „Nein“. <strong>Non</strong> verneint dagegen einen Satz: <strong>No, non abito a Milano.</strong> – Nein, ich wohne nicht in Mailand.</p>
+        <p>Bei einer Ja-Nein-Frage bleibt die Wortfolge einfach: <strong>Abiti a Milano?</strong> – Wohnst du in Mailand?</p>
+        <p>Die vollständige Antwort aus der Folge lautet: <strong>No, non abito a Milano. Abito a Trieste.</strong></p>
+      </div>
+
+      <h3>Mini-Dialog</h3>
+      <div class="dialogue">
+        <div class="line"><span class="speaker">A</span><div><strong>Dove abiti?</strong><br><span class="translation">Wo wohnst du?</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Abito a Berlino, in Germania. E tu?</strong><br><span class="translation">Ich wohne in Berlin, in Deutschland. Und du?</span></div></div>
+        <div class="line"><span class="speaker">A</span><div><strong>Abito a Roma, in Italia.</strong><br><span class="translation">Ich wohne in Rom, in Italien.</span></div></div>
+      </div>
+
+      <div class="memory"><strong>Merksatz:</strong> <em>a Berlino</em> für eine Stadt, <em>in Germania</em> für ein Land.</div>
+    </article>
+
+    <article id="lektion-5" data-lesson="5">
+      <div class="lesson-head">
+        <div>
+          <span class="lesson-no">Lektion 5</span>
+          <h2>Meine Familie – Personen vorstellen und Geschwister</h2>
+        </div>
+      </div>
+
+      <p class="goal"><strong>Das kannst du danach:</strong> Familienmitglieder vorstellen, nach Geschwistern fragen und mit <em>ho</em>, <em>hai</em> und <em>non ho</em> antworten.</p>
+
+      <h3>Mein oder meine? – mio und mia</h3>
+      <div class="rule">
+        <strong class="title">Verstehen: mio bei männlichen, mia bei weiblichen Wörtern</strong>
+        <p><strong>Mio</strong> und <strong>mia</strong> bedeuten beide „mein/meine“. Welche Form du benutzt, richtet sich nach dem <strong>italienischen Wort</strong>, nicht nach der Person, die spricht.</p>
+        <table>
+          <thead><tr><th>Männlich</th><th>Weiblich</th><th>Deutsch</th></tr></thead>
+          <tbody>
+            <tr><td><strong>mio padre</strong></td><td><strong>mia madre</strong></td><td>mein Vater / meine Mutter</td></tr>
+            <tr><td><strong>mio fratello</strong></td><td><strong>mia sorella</strong></td><td>mein Bruder / meine Schwester</td></tr>
+            <tr><td><strong>mio figlio</strong></td><td><strong>mia figlia</strong></td><td>mein Sohn / meine Tochter</td></tr>
+            <tr><td><strong>mio marito</strong></td><td><strong>mia moglie</strong></td><td>mein Ehemann / meine Ehefrau</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Merke:</strong> Die Endung hilft dir oft: <strong>-o → mio</strong>, <strong>-a → mia</strong>. Das ist eine gute Lernhilfe, aber keine allgemeine Regel für jedes italienische Substantiv.</p>
+      </div>
+
+      <h3>Jemanden vorstellen: questo und questa</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Questo è mio padre.</div><span class="pron">kwesto e mio padre</span><div class="de">Das ist mein Vater.</div></div>
+        <div class="phrase"><div class="it">Questa è mia madre.</div><span class="pron">kwesta e mia madre</span><div class="de">Das ist meine Mutter.</div></div>
+        <div class="phrase"><div class="it">Questo è mio figlio.</div><span class="pron">kwesto e mio filjo</span><div class="de">Das ist mein Sohn.</div></div>
+        <div class="phrase"><div class="it">Questa è mia moglie.</div><span class="pron">kwesta e mia mollje</span><div class="de">Das ist meine Ehefrau.</div></div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Verstehen: questo oder questa?</strong>
+        <p><strong>Questo</strong> verwendest du hier mit einem männlichen Wort: <strong>Questo è mio padre.</strong></p>
+        <p><strong>Questa</strong> verwendest du hier mit einem weiblichen Wort: <strong>Questa è mia madre.</strong></p>
+        <p>Das Muster kennst du schon: Im Italienischen passen sich viele kleine Wörter an <strong>männlich/weiblich</strong> an – ähnlich wie bei <strong>buon/buona</strong> aus Lektion 1–02.</p>
+      </div>
+
+      <h3>Nach dem Namen fragen</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Come si chiama tua madre?</div><span class="pron">kome si kjama tua madre</span><div class="de">Wie heißt deine Mutter?</div></div>
+        <div class="phrase"><div class="it">Si chiama …</div><span class="pron">si kjama</span><div class="de">Er / Sie heißt …</div></div>
+        <div class="phrase"><div class="it">Ho un fratello.</div><span class="pron">o un fratello</span><div class="de">Ich habe einen Bruder.</div></div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Verstehen: mi chiamo und si chiama</strong>
+        <p><strong>Mi chiamo Tobias.</strong> = Ich heiße Tobias. <strong>Si chiama Luca.</strong> = Er heißt Luca. / Sie heißt Luca.</p>
+        <p>Das <strong>si</strong> kennst du schon aus der höflichen Frage <strong>Come si chiama?</strong>. Der Kontext zeigt dir, ob „Sie heißen“ oder „er/sie heißt“ gemeint ist.</p>
+      </div>
+
+      <h3>Über Geschwister sprechen</h3>
+      <div class="grid">
+        <div class="phrase"><div class="it">Hai fratelli o sorelle?</div><span class="pron">ai fratelli o sorelle</span><div class="de">Hast du Brüder oder Schwestern?</div></div>
+        <div class="phrase"><div class="it">Hai un fratello?</div><span class="pron">ai un fratello</span><div class="de">Hast du einen Bruder?</div></div>
+        <div class="phrase"><div class="it">Hai una sorella?</div><span class="pron">ai una sorella</span><div class="de">Hast du eine Schwester?</div></div>
+        <div class="phrase"><div class="it">Ho una sorella.</div><span class="pron">o una sorella</span><div class="de">Ich habe eine Schwester.</div></div>
+        <div class="phrase"><div class="it">Ho due fratelli.</div><span class="pron">o due fratelli</span><div class="de">Ich habe zwei Brüder.</div></div>
+        <div class="phrase"><div class="it">No, non ho fratelli.</div><span class="pron">no, non o fratelli</span><div class="de">Nein, ich habe keine Brüder.</div></div>
+        <div class="phrase"><div class="it">No, non ho sorelle.</div><span class="pron">no, non o sorelle</span><div class="de">Nein, ich habe keine Schwestern.</div></div>
+        <div class="phrase"><div class="it">Non ho fratelli o sorelle.</div><span class="pron">non o fratelli o sorelle</span><div class="de">Ich habe keine Brüder oder Schwestern.</div></div>
+      </div>
+
+      <div class="rule">
+        <strong class="title">Verstehen: ho, hai und non ho</strong>
+        <p><strong>Ho</strong> = ich habe · <strong>hai</strong> = du hast · <strong>non ho</strong> = ich habe nicht / ich habe keine.</p>
+        <p>Das <strong>h</strong> bleibt stumm: <strong>ho</strong> klingt wie „o“, <strong>hai</strong> wie „ai“.</p>
+        <p><strong>un fratello</strong> ist männlich, <strong>una sorella</strong> weiblich. Im Plural wird daraus <strong>fratelli</strong> und <strong>sorelle</strong>.</p>
+      </div>
+
+      <h3>Mini-Dialog</h3>
+      <div class="dialogue">
+        <div class="line"><span class="speaker">A</span><div><strong>Hai fratelli o sorelle?</strong><br><span class="translation">Hast du Brüder oder Schwestern?</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Sì, ho due fratelli.</strong><br><span class="translation">Ja, ich habe zwei Brüder.</span></div></div>
+        <div class="line"><span class="speaker">A</span><div><strong>Come si chiama tuo fratello?</strong><br><span class="translation">Wie heißt dein Bruder?</span></div></div>
+        <div class="line"><span class="speaker">B</span><div><strong>Si chiama Luca.</strong><br><span class="translation">Er heißt Luca.</span></div></div>
+      </div>
+
+      <div class="memory"><strong>Merksatz:</strong> <em>mio padre / mia madre</em> und <em>questo / questa</em> richten sich nach dem männlichen oder weiblichen Wort. Mit <em>ho</em> sagst du, wen du hast: <em>Ho due fratelli.</em></div>
+    </article>
+
+    <article id="selbstcheck" data-lesson="check">
+      <span class="lesson-no">Kurze Wiederholung</span>
+      <h2>Kannst du es schon anwenden?</h2>
+      <p>Sprich deine Antwort erst laut aus und klappe dann die Lösung auf.</p>
+
+      <details>
+        <summary>1. Wie sagst du zu einem Freund: „Wie geht es dir?“</summary>
+        <p><strong>Come stai?</strong> – <em>kome stai</em></p>
+      </details>
+      <details>
+        <summary>2. Es ist Abend. Welche Begrüßung passt?</summary>
+        <p><strong>Buonasera!</strong> – weil <em>la sera</em> weiblich ist.</p>
+      </details>
+      <details>
+        <summary>3. Warum heißt es „buongiorno“, aber „buonasera“?</summary>
+        <p><em>Giorno</em> ist männlich, deshalb <strong>buon</strong>. <em>Sera</em> ist weiblich, deshalb <strong>buona</strong>.</p>
+      </details>
+      <details>
+        <summary>4. Wie fragst du informell nach dem Namen?</summary>
+        <p><strong>Come ti chiami?</strong> – <em>kome ti kjami</em></p>
+      </details>
+      <details>
+        <summary>5. Wie stellst du dich mit deinem Namen vor?</summary>
+        <p><strong>Mi chiamo Tobias.</strong> – <em>mi kjamo Tobias</em></p>
+      </details>
+      <details>
+        <summary>6. Wie könnte dein erster kurzer Dialog beginnen?</summary>
+        <p><strong>Buongiorno! Come ti chiami? – Mi chiamo Tobias. Piacere!</strong></p>
+      </details>
+      <details>
+        <summary>7. Wie fragst du einen Freund: „Woher kommst du?“</summary>
+        <p><strong>Di dove sei?</strong> – <em>di dowe säi</em></p>
+      </details>
+      <details>
+        <summary>8. Wie antwortest du persönlich auf „Di dove sei?“?</summary>
+        <p><strong>Sono di Berlino.</strong> – <em>sono di berlino</em></p>
+      </details>
+      <details>
+        <summary>9. Wie sagst du als Tobias: „Ich bin Deutscher“?</summary>
+        <p><strong>Sono tedesco.</strong> Für eine Frau wäre es <strong>sono tedesca</strong>.</p>
+      </details>
+      <details>
+        <summary>10. Wie fragst du einen Freund: „Wo wohnst du?“</summary>
+        <p><strong>Dove abiti?</strong> – <em>dowe abiti</em></p>
+      </details>
+      <details>
+        <summary>11. Wie sagst du, dass du in Berlin in Deutschland wohnst?</summary>
+        <p><strong>Abito a Berlino, in Germania.</strong> – <em>abito a berlino, in dschermania</em></p>
+      </details>
+      <details>
+        <summary>12. Warum heißt es „a Berlino“, aber „in Germania“?</summary>
+        <p>Vor Städten steht normalerweise <strong>a</strong>, vor Ländern normalerweise <strong>in</strong>.</p>
+      </details>
+      <details>
+        <summary>13. Wie sagst du „mein Vater“ und „meine Mutter“?</summary>
+        <p><strong>mio padre</strong> und <strong>mia madre</strong>.</p>
+      </details>
+      <details>
+        <summary>14. Wie stellst du deine Mutter vor: „Das ist meine Mutter“?</summary>
+        <p><strong>Questa è mia madre.</strong> – <em>kwesta e mia madre</em></p>
+      </details>
+      <details>
+        <summary>15. Wie antwortest du auf die Frage nach dem Namen einer anderen Person?</summary>
+        <p><strong>Si chiama …</strong> – „Er / Sie heißt …“</p>
+      </details>
+      <details>
+        <summary>16. Wie fragst du: „Hast du Brüder oder Schwestern?“</summary>
+        <p><strong>Hai fratelli o sorelle?</strong> – <em>ai fratelli o sorelle</em></p>
+      </details>
+      <details>
+        <summary>17. Wie sagst du: „Ich habe zwei Brüder“?</summary>
+        <p><strong>Ho due fratelli.</strong> – <em>o due fratelli</em></p>
+      </details>
+      <details>
+        <summary>18. Wie fragst du nach der Telefonnummer?</summary>
+        <p><strong>Qual è il tuo numero di telefono?</strong> – <em>kwal e il tuo numero di telefono</em></p>
+      </details>
+      <details>
+        <summary>19. Wie sagst du: „Ich bin ein bisschen müde“?</summary>
+        <p><strong>Sono un po’ stanco.</strong> – als Frau: <strong>stanca</strong>.</p>
+      </details>
+      <details>
+        <summary>20. Wie heißen „wir“, „ihr“ und „sie“ in der Mehrzahl?</summary>
+        <p><strong>noi</strong> = wir · <strong>voi</strong> = ihr / Sie · <strong>loro</strong> = sie.</p>
+      </details>
+      <details>
+        <summary>21. Wie sagst du: „Wir kommen aus Berlin“?</summary>
+        <p><strong>Siamo di Berlino.</strong> – <em>sjamo di berlino</em></p>
+      </details>
+      <details>
+        <summary>22. Welche Formen von essere gehören zu noi, voi und loro?</summary>
+        <p><strong>noi siamo</strong> · <strong>voi siete</strong> · <strong>loro sono</strong>.</p>
+      </details>
+      <details>
+        <summary>23. Welche Buchstaben fehlen im klassischen italienischen Alphabet?</summary>
+        <p><strong>J, K, W, X und Y.</strong> Sie werden vor allem für Fremdwörter und Namen gebraucht.</p>
+      </details>
+      <details>
+        <summary>24. Wie sagst du: „Tom und Mark wohnen in Deutschland“?</summary>
+        <p><strong>Tom e Mark abitano in Germania.</strong> Zwei Namen entsprechen <strong>loro</strong>, deshalb heißt die Verbform <strong>abitano</strong>.</p>
+      </details>
+      <details>
+        <summary>25. Wie fragst du mehrere Freunde: „Wohnt ihr in Italien?“</summary>
+        <p><strong>Abitate in Italia?</strong> Die Wortfolge ist dieselbe wie in der Aussage <strong>Abitate in Italia.</strong>; die Stimme macht daraus eine Frage.</p>
+      </details>
+      <details>
+        <summary>26. Stelle dich vollständig vor: Name, Nationalität und Herkunft.</summary>
+        <p><strong>Mi chiamo Tobias, sono tedesco e vengo da Berlino, in Germania.</strong></p>
+      </details>
+    </article>
+
+    <footer>Stand: 14. August 2026 · Tobias’ persönlicher Italienisch-Lernkurs</footer>
+  </main>
+
+  <script>
+    const lessonButtons = [...document.querySelectorAll('button[data-lesson-filter]')];
+    const lessons = [...document.querySelectorAll('article[data-lesson]')];
+
+    lessonButtons.forEach(button => button.addEventListener('click', () => {
+      const selected = button.dataset.lessonFilter;
+      lessonButtons.forEach(item => item.classList.toggle('active', item === button));
+      lessons.forEach(lesson => {
+        lesson.hidden = selected !== 'all' && lesson.dataset.lesson !== selected;
+      });
+
+      if (selected !== 'all') {
+        requestAnimationFrame(() => {
+          document.querySelector(`article[data-lesson="${selected}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+    }));
+  </script>
+</body>
+</html>
