@@ -8,44 +8,44 @@
 import AVFoundation
 import SwiftUI
 
-@Observable
-final class SpeechManager {
+final class SpeechManager: NSObject, AVSpeechSynthesizerDelegate {
     static let shared = SpeechManager()
 
     private let synthesizer = AVSpeechSynthesizer()
     var isSpeaking = false
 
-    private init() {
+    override init() {
+        super.init()
+        synthesizer.delegate = self
         configureSession()
     }
 
     private func configureSession() {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .spokenAudio, options: [.duckOthers, .mixWithOthers])
+            try AVAudioSession.sharedInstance().setCategory(
+                .playback,
+                mode: .spokenAudio,
+                options: [.duckOthers, .mixWithOthers]
+            )
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            // Session-Konfiguration ist optional – App läuft auch ohne
         }
-    }
-
-    var isAvailable: Bool {
-        true
     }
 
     func speak(_ text: String, language: String = "it-IT") {
         guard !text.isEmpty else { return }
-        stop()
+        synthesizer.stop()
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: language) ?? AVSpeechSynthesisVoice(language: "it-IT")
+        if let voice = AVSpeechSynthesisVoice(language: language) {
+            utterance.voice = voice
+        } else if let fallback = AVSpeechSynthesisVoice(language: "it-IT") {
+            utterance.voice = fallback
+        }
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.92
         utterance.pitchMultiplier = 1.0
         utterance.volume = 1.0
         isSpeaking = true
         synthesizer.speak(utterance)
-        // Reset state after a reasonable delay if no delegate
-        DispatchQueue.main.asyncAfter(deadline: .now() + max(1.0, Double(text.count) * 0.08)) { [weak self] in
-            self?.isSpeaking = false
-        }
     }
 
     func speakItalian(_ text: String) {
@@ -57,9 +57,13 @@ final class SpeechManager {
     }
 
     func stop() {
-        if synthesizer.isSpeaking {
-            synthesizer.stop()
-        }
+        synthesizer.stop()
         isSpeaking = false
+    }
+
+    nonisolated func synthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        Task { @MainActor in
+            self.isSpeaking = false
+        }
     }
 }
