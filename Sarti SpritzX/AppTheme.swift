@@ -42,7 +42,7 @@ struct CardBackgroundModifier: ViewModifier {
 }
 
 extension View {
-    funCardBackground(_ color: Color = .cream) -> some View {
+    func funCardBackground(_ color: Color = .cream) -> some View {
         modifier(CardBackgroundModifier(color: color))
     }
 }
