@@ -4,15 +4,7 @@
 //
 //  Created by Tobias Thiele on 12.09.26.
 //
+//  Veraltet – nicht mehr verwendet. Die App nutzt jetzt die Modelle in ProgressStore.swift.
+//
 
 import Foundation
-import SwiftData
-
-@Model
-final class Item {
-    var timestamp: Date
-    
-    init(timestamp: Date) {
-        self.timestamp = timestamp
-    }
-}
