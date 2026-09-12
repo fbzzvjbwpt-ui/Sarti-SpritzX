@@ -347,7 +347,7 @@ final class GamificationStore {
 
     func unknownItems() -> [VocabItem] {
         guard let context else { return ItalianData.shared.vocabulary }
-        let knownKeys = Set((try? context.fetch(FetchDescriptor<ProgressRecord>()))??.filter { $0.known }.map { $0.vocabItalian } ?? [])
+        let knownKeys = Set((try? context.fetch(FetchDescriptor<ProgressRecord>()))?.filter { $0.known }.map { $0.vocabItalian } ?? [])
         return ItalianData.shared.vocabulary.filter { !knownKeys.contains($0.italian) }
     }
 }
