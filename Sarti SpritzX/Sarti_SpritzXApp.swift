@@ -12,10 +12,11 @@ import SwiftData
 struct Sarti_SpritzXApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            ProgressRecord.self,
+            QuizStat.self,
+            DailyStreak.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
@@ -23,9 +24,15 @@ struct Sarti_SpritzXApp: App {
         }
     }()
 
+    @State private var gamification = GamificationStore()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootTabView()
+                .environment(gamification)
+                .onAppear {
+                    gamification.attach(sharedModelContainer.mainContext)
+                }
         }
         .modelContainer(sharedModelContainer)
     }
