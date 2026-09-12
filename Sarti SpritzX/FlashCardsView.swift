@@ -15,6 +15,23 @@ struct FlashCardsView: View {
     @State private var index = 0
     @State private var showingDeck = false
     @State private var reverseMode = false
+    enum LearnMode: String, CaseIterable, Identifiable {
+        case category = "Kategorie"
+        case due = "Wiederholen"
+        case unknown = "Unbekannte"
+        case favorites = "Favoriten"
+        var id: String { rawValue }
+        var icon: String {
+            switch self {
+            case .category: "square.grid.2x2"
+            case .due: "arrow.clockwise"
+            case .unknown: "questionmark.circle"
+            case .favorites: "star"
+            }
+        }
+    }
+    @State private var mode: LearnMode = .category
+    @State private var speaking = false
 
     var body: some View {
         NavigationStack {
@@ -52,10 +69,44 @@ struct FlashCardsView: View {
         ScrollView {
             VStack(spacing: 18) {
                 headerCard
-                categoryGrid
+                modeGrid
+                if mode == .category { categoryGrid }
                 startButton
             }
             .padding()
+        }
+    }
+
+    private var modeGrid: some View {
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
+            ForEach(LearnMode.allCases) { m in
+                Button {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+                        mode = m
+                    }
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: m.icon)
+                            .font(.title2)
+                        Text(m.rawValue)
+                            .font(.headline)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(mode == m ? .white : .ink)
+                    .padding(.vertical, 16)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .fill(mode == m ? AnyShapeStyle(LinearGradient(colors: [.coral, .warmGold], startPoint: .topLeading, endPoint: .bottomTrailing)) : AnyShapeStyle(Color.white))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .stroke(mode == m ? .clear : Color.mutedInk.opacity(0.18), lineWidth: 1)
+                    )
+                    .shadow(color: mode == m ? .coral.opacity(0.3) : .clear, radius: 8, y: 4)
+                }
+                .buttonStyle(.plain)
+                .scaleEffect(mode == m ? 1.04 : 1.0)
+            }
         }
     }
 
@@ -100,7 +151,7 @@ struct FlashCardsView: View {
         Button {
             startDeck()
         } label: {
-            Text("Lernen starten")
+            Text(startButtonTitle)
                 .font(.headline)
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
@@ -111,8 +162,26 @@ struct FlashCardsView: View {
                 )
                 .shadow(color: .pinkRed.opacity(0.35), radius: 10, y: 6)
         }
-        .disabled(selectedCategory == nil)
-        .opacity(selectedCategory == nil ? 0.5 : 1)
+        .disabled(!canStart)
+        .opacity(canStart ? 1 : 0.5)
+    }
+
+    private var startButtonTitle: String {
+        switch mode {
+        case .category: selectedCategory == nil ? "Kategorie wählen" : "Lernen starten"
+        case .due: "Wiederholung starten"
+        case .unknown: "Unbekannte üben"
+        case .favorites: "Favoriten lernen"
+        }
+    }
+
+    private var canStart: Bool {
+        switch mode {
+        case .category: selectedCategory != nil
+        case .due: !game.dueReviewItems().isEmpty
+        case .unknown: !game.unknownItems().isEmpty
+        case .favorites: !game.favoriteItems().isEmpty
+        }
     }
 
     private var deckView: some View {
@@ -197,10 +266,19 @@ struct FlashCardsView: View {
     }
 
     private func startDeck() {
-        if let cat = selectedCategory {
-            deck = ItalianData.shared.vocab(in: cat).shuffled()
-        } else {
-            deck = ItalianData.shared.vocabulary.shuffled()
+        switch mode {
+        case .category:
+            if let cat = selectedCategory {
+                deck = ItalianData.shared.vocab(in: cat).shuffled()
+            } else {
+                deck = ItalianData.shared.vocabulary.shuffled()
+            }
+        case .due:
+            deck = game.dueReviewItems().shuffled()
+        case .unknown:
+            deck = game.unknownItems().shuffled()
+        case .favorites:
+            deck = game.favoriteItems().shuffled()
         }
         index = 0
         withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
@@ -310,10 +388,27 @@ struct FlipCard: View {
 
     private func cardFace(primary: String, secondary: String?, accent: Color, label: String) -> some View {
         VStack(spacing: 18) {
-            Text(label.uppercased())
-                .font(.caption.weight(.heavy))
-                .foregroundStyle(accent)
-                .tracking(2)
+            HStack {
+                Text(label.uppercased())
+                    .font(.caption.weight(.heavy))
+                    .foregroundStyle(accent)
+                    .tracking(2)
+                Spacer()
+                Button {
+                    if reverseMode {
+                        SpeechManager.shared.speakGerman(primary)
+                    } else {
+                        SpeechManager.shared.speakItalian(primary)
+                    }
+                } label: {
+                    Image(systemName: "speaker.wave.2.fill")
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(accent)
+                        .padding(8)
+                        .background(Circle().fill(accent.opacity(0.14)))
+                }
+                .buttonStyle(.plain)
+            }
             Spacer()
             Text(primary)
                 .font(.system(size: 30, weight: .bold, design: .rounded))

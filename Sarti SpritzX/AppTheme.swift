@@ -18,6 +18,12 @@ extension Color {
     static let mintPop = Color(red: 0.36, green: 0.87, blue: 0.72)
     static let ink = Color(red: 0.12, green: 0.16, blue: 0.13)
     static let mutedInk = Color(red: 0.41, green: 0.45, blue: 0.42)
+    static let cardBg = Color(UIColor { traits in
+        traits.userInterfaceStyle == .dark ? UIColor(white: 0.16, alpha: 1.0) : UIColor.white
+    })
+    static let appBg = Color(UIColor { traits in
+        traits.userInterfaceStyle == .dark ? UIColor(white: 0.10, alpha: 1.0) : UIColor(red: 0.96, green: 0.94, blue: 0.88, alpha: 1.0)
+    })
 }
 
 struct CardBackgroundModifier: ViewModifier {

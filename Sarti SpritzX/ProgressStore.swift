@@ -16,13 +16,17 @@ final class ProgressRecord {
     var timesCorrect: Int
     var lastSeen: Date
     var known: Bool
+    var box: Int
+    var nextReviewDate: Date
 
-    init(vocabItalian: String, timesShown: Int = 0, timesCorrect: Int = 0, lastSeen: Date = .now, known: Bool = false) {
+    init(vocabItalian: String, timesShown: Int = 0, timesCorrect: Int = 0, lastSeen: Date = .now, known: Bool = false, box: Int = 0, nextReviewDate: Date = .now) {
         self.vocabItalian = vocabItalian
         self.timesShown = timesShown
         self.timesCorrect = timesCorrect
         self.lastSeen = lastSeen
         self.known = known
+        self.box = box
+        self.nextReviewDate = nextReviewDate
     }
 }
 
@@ -49,6 +53,17 @@ final class DailyStreak {
     init(day: String, reviewedCount: Int = 0) {
         self.day = day
         self.reviewedCount = reviewedCount
+    }
+}
+
+@Model
+final class Favorite {
+    var vocabItalian: String
+    var addedAt: Date
+
+    init(vocabItalian: String, addedAt: Date = .now) {
+        self.vocabItalian = vocabItalian
+        self.addedAt = addedAt
     }
 }
 
@@ -145,13 +160,17 @@ final class GamificationStore {
         guard let context else { return }
         let fetch = FetchDescriptor<ProgressRecord>(predicate: #Predicate { $0.vocabItalian == vocabItalian })
         let existing = (try? context.fetch(fetch))?.first
+        let now = Date.now
         if let rec = existing {
             rec.timesShown += 1
-            rec.lastSeen = .now
+            rec.lastSeen = now
             if correct { rec.timesCorrect += 1 }
             rec.known = rec.timesCorrect >= 3
+            rec.box = nextBox(current: rec.box, correct: correct)
+            rec.nextReviewDate = nextReviewDate(for: rec.box)
         } else {
-            let rec = ProgressRecord(vocabItalian: vocabItalian, timesShown: 1, timesCorrect: correct ? 1 : 0, known: false)
+            let startBox = correct ? 1 : 0
+            let rec = ProgressRecord(vocabItalian: vocabItalian, timesShown: 1, timesCorrect: correct ? 1 : 0, known: false, box: startBox, nextReviewDate: nextReviewDate(for: startBox))
             context.insert(rec)
         }
         try? context.save()
@@ -259,5 +278,76 @@ final class GamificationStore {
         guard let context else { return false }
         let fetch = FetchDescriptor<ProgressRecord>(predicate: #Predicate { $0.vocabItalian == item.italian })
         return (try? context.fetch(fetch))?.first?.known ?? false
+    }
+
+    // MARK: - Spaced Repetition (Leitner-System)
+
+    private func nextBox(current: Int, correct: Bool) -> Int {
+        correct ? min(current + 1, 5) : 0
+    }
+
+    private func nextReviewDate(for box: Int) -> Date {
+        let hours: TimeInterval
+        switch box {
+        case 0: hours = 1
+        case 1: hours = 4
+        case 2: hours = 24
+        case 3: hours = 72
+        case 4: hours = 168
+        default: hours = 336
+        }
+        return Date.now + hours * 3600
+    }
+
+    func dueReviewItems() -> [VocabItem] {
+        guard let context else { return [] }
+        let now = Date.now
+        let records = (try? context.fetch(FetchDescriptor<ProgressRecord>())) ?? []
+        let dueKeys = Set(records.filter { $0.nextReviewDate <= now && !$0.known }.map { $0.vocabItalian })
+        return ItalianData.shared.vocabulary.filter { dueKeys.contains($0.italian) }
+    }
+
+    func box(for item: VocabItem) -> Int {
+        guard let context else { return 0 }
+        let fetch = FetchDescriptor<ProgressRecord>(predicate: #Predicate { $0.vocabItalian == item.italian })
+        return (try? context.fetch(fetch))?.first?.box ?? 0
+    }
+
+    // MARK: - Favoriten
+
+    func toggleFavorite(_ item: VocabItem) {
+        guard let context else { return }
+        let fetch = FetchDescriptor<Favorite>(predicate: #Predicate { $0.vocabItalian == item.italian })
+        if let existing = (try? context.fetch(fetch))?.first {
+            context.delete(existing)
+        } else {
+            context.insert(Favorite(vocabItalian: item.italian))
+        }
+        try? context.save()
+    }
+
+    func isFavorite(_ item: VocabItem) -> Bool {
+        guard let context else { return false }
+        let fetch = FetchDescriptor<Favorite>(predicate: #Predicate { $0.vocabItalian == item.italian })
+        return ((try? context.fetch(fetch))?.isEmpty) == false
+    }
+
+    func favoriteKeys() -> Set<String> {
+        guard let context else { return [] }
+        let favs = (try? context.fetch(FetchDescriptor<Favorite>())) ?? []
+        return Set(favs.map { $0.vocabItalian })
+    }
+
+    func favoriteItems() -> [VocabItem] {
+        let keys = favoriteKeys()
+        return ItalianData.shared.vocabulary.filter { keys.contains($0.italian) }
+    }
+
+    // MARK: - Lernfortschritt (unbekannte Karten)
+
+    func unknownItems() -> [VocabItem] {
+        guard let context else { return ItalianData.shared.vocabulary }
+        let knownKeys = Set((try? context.fetch(FetchDescriptor<ProgressRecord>()))??.filter { $0.known }.map { $0.vocabItalian } ?? [])
+        return ItalianData.shared.vocabulary.filter { !knownKeys.contains($0.italian) }
     }
 }

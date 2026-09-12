@@ -20,6 +20,7 @@ struct ProgressDashboardView: View {
                     VStack(spacing: 18) {
                         streakHeader
                         statsRow
+                        streakCalendar
                         badgeSection
                         categoryProgress
                     }
@@ -71,11 +72,66 @@ struct ProgressDashboardView: View {
     }
 
     private var statsRow: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 10) {
             StatBadge(title: "Karten", value: game.totalCardsReviewed, icon: "rectangle.on.rectangle.angled", color: .lavender)
             StatBadge(title: "Richtig", value: game.totalCorrect, icon: "checkmark.circle.fill", color: .mintPop)
             StatBadge(title: "Gekonnt", value: game.knownCountAll(), icon: "star.fill", color: .warmGold)
+            StatBadge(title: "Wiederholen", value: game.dueReviewItems().count, icon: "arrow.clockwise", color: .coral)
         }
+    }
+
+    private var streakCalendar: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("📅 Diese Woche")
+                .font(.headline)
+            HStack(spacing: 6) {
+                ForEach(lastSevenDayKeys(), id: \.self) { key in
+                    let label = weekdayShort(from: key)
+                    VStack(spacing: 4) {
+                        Text(label)
+                            .font(.caption2)
+                            .foregroundStyle(.mutedInk)
+                        Circle()
+                            .fill(isToday(key) ? AnyShapeStyle(LinearGradient(colors: [.warmGold, .coral], startPoint: .top, endPoint: .bottom)) : AnyShapeStyle(Color.mintPop.opacity(0.5)))
+                            .frame(width: 34, height: 34)
+                            .overlay(
+                                Text(String(key.suffix(2)))
+                                    .font(.caption.weight(.bold))
+                                    .foregroundStyle(.ink)
+                            )
+                            .scaleEffect(isToday(key) ? 1.08 : 1.0)
+                    }
+                }
+            }
+        }
+        .funCardBackground(.white)
+    }
+
+    private func lastSevenDayKeys() -> [String] {
+        let cal = Calendar.current
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        let today = Date.now
+        return (0..<7).reversed().map { delta in
+            if let d = cal.date(byAdding: .day, value: -delta, to: today) {
+                return f.string(from: d)
+            }
+            return f.string(from: today)
+        }
+    }
+
+    private func isToday(_ key: String) -> Bool {
+        key == game.todayKey()
+    }
+
+    private func weekdayShort(from key: String) -> String {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        guard let d = f.date(from: key) else { return "" }
+        let g = DateFormatter()
+        g.locale = Locale(identifier: "de_DE")
+        g.dateFormat = "EEEEE"
+        return g.string(from: d)
     }
 
     private var badgeSection: some View {

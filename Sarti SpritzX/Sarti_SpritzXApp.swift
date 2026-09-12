@@ -15,6 +15,7 @@ struct Sarti_SpritzXApp: App {
             ProgressRecord.self,
             QuizStat.self,
             DailyStreak.self,
+            Favorite.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {

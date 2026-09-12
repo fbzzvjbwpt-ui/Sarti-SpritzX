@@ -24,17 +24,23 @@ struct RootTabView: View {
                 }
                 .tag(1)
 
+            VocabBrowseView()
+                .tabItem {
+                    Label("Wörter", systemImage: "character.book.closed.fill")
+                }
+                .tag(2)
+
             LessonsView()
                 .tabItem {
                     Label("Lektionen", systemImage: "book.fill")
                 }
-                .tag(2)
+                .tag(3)
 
             ProgressDashboardView()
                 .tabItem {
                     Label("Fortschritt", systemImage: "flame.fill")
                 }
-                .tag(3)
+                .tag(4)
         }
         .tint(.pinkRed)
     }
