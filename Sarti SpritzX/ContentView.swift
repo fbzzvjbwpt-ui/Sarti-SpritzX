@@ -9,8 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Color.green
-            .ignoresSafeArea()
+        ZStack {
+            Color.green
+                .ignoresSafeArea()
+
+            Text("Willkommen")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundStyle(.white)
+        }
     }
 }
 
