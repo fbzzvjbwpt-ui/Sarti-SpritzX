@@ -18,29 +18,23 @@ struct RootTabView: View {
                 }
                 .tag(0)
 
-            QuizView()
-                .tabItem {
-                    Label("Quiz", systemImage: "questionmark.bubble.fill")
-                }
-                .tag(1)
-
             VocabBrowseView()
                 .tabItem {
                     Label("Wörter", systemImage: "character.book.closed.fill")
                 }
-                .tag(2)
+                .tag(1)
 
             LessonsView()
                 .tabItem {
                     Label("Lektionen", systemImage: "book.fill")
                 }
-                .tag(3)
+                .tag(2)
 
             ProgressDashboardView()
                 .tabItem {
                     Label("Fortschritt", systemImage: "flame.fill")
                 }
-                .tag(4)
+                .tag(3)
         }
         .tint(.pinkRed)
     }
